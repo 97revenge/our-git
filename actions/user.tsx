@@ -12,33 +12,27 @@ const model = createGoogleGenerativeAI({
 
 type UserProps = {
   username: string;
-  review: string;
+  id: number;
 };
 
-const getUser = async (user: { username: string }) => {
-  const response = await fetch(`https://api.github.com/users/${user.username}`);
+const getUser = async (username: string) => {
+  const response = await fetch(`https://api.github.com/users/${username}`);
 
   const data = await response.json();
 
   return data;
 };
 
-// const UserComponent = async (user: UserProps) => {
-//   return (
-//     <>
-//       <div className="text-3xl font-bold">{user.username}</div>
-//       <div className="text-3xl font-bold">{user.review}</div>
-//     </>
-//   );
-// };
-
 const UserComponent = (props: UserProps) => (
   <div className="border border-neutral-200 p-4 rounded-lg max-w-fit">
-    The profile is : {props.username} and the review is: {props.review}
+    <ul>
+      <li> The profile is : {props.username}</li>
+      <li>the id is : {props.id}</li>
+    </ul>
   </div>
 );
 
-export async function streamComponent() {
+export async function streamComponent(message: string) {
   const result = await streamUI({
     model: model("gemini-1.5-flash-latest", {
       safetySettings: [
@@ -58,10 +52,11 @@ export async function streamComponent() {
         parameters: z.object({
           username: z.string(),
         }),
-        generate: async function* ({ username }) {
+        generate: async function* () {
           yield <SimpleLoader />;
-          const user = await getUser({ username });
-          return <UserComponent username={user} review="" />;
+          const user = await getUser(message);
+
+          return <UserComponent username={user.login} id={user.id} />;
         },
       },
     },
