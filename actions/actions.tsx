@@ -1,6 +1,5 @@
 "use server";
 
-// import { OpenAIStream } from "ai"
 import { streamUI } from "ai/rsc";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import z from "zod";
