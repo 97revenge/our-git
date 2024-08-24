@@ -1,10 +1,12 @@
 "use server";
 
-import { streamUI } from "ai/rsc";
+import { createStreamableValue, readStreamableValue, streamUI } from "ai/rsc";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import z from "zod";
 import { SimpleLoader } from "@/components/SimpleLoader";
-import { CoreMessage } from "ai";
+import { CoreMessage, streamText } from "ai";
+
+let textContext: string;
 
 const model = createGoogleGenerativeAI({
   apiKey: process.env.API_GEMINI_KEY!,
@@ -13,6 +15,7 @@ const model = createGoogleGenerativeAI({
 type UserProps = {
   username: string;
   id: number;
+  review: any;
 };
 
 const getUser = async (username: string) => {
@@ -20,17 +23,35 @@ const getUser = async (username: string) => {
 
   const data = await response.json();
 
-  return data;
+  const { textStream } = await streamText({
+    model: model("gemini-1.5-flash-latest"),
+    prompt: `reviewing this username on  the github ${username}`,
+    system: "you are a assistant reviewer of github profiles.",
+  });
+
+  let value;
+
+  for await (const textPart of textStream) {
+    value = textPart;
+  }
+
+  return { data, value };
 };
 
-const UserComponent = (props: UserProps) => (
-  <div className="border border-neutral-200 p-4 rounded-lg max-w-fit">
-    <ul>
-      <li> The profile is : {props.username}</li>
-      <li>the id is : {props.id}</li>
-    </ul>
-  </div>
-);
+const UserComponent = (props: UserProps) => {
+  "use client";
+  return (
+    <>
+      <div className="border border-neutral-200 p-4 rounded-lg max-w-fit">
+        <ul>
+          <li> The profile is : {props.username}</li>
+          <li>the id is : {props.id}</li>
+          <li>{props.review}</li>
+        </ul>
+      </div>
+    </>
+  );
+};
 
 export async function streamComponent(message: string) {
   const result = await streamUI({
@@ -56,7 +77,10 @@ export async function streamComponent(message: string) {
           yield <SimpleLoader />;
           const user = await getUser(message);
 
-          return <UserComponent username={user.login} id={user.id} />;
+          const { username, id } = user.data;
+          const { value } = user;
+
+          return <UserComponent username={username} id={id} review={value} />;
         },
       },
     },
