@@ -23,16 +23,22 @@ const getUser = async (user: { username: string }) => {
   return data;
 };
 
-const UserComponent = async (user: UserProps) => {
-  return (
-    <>
-      <div className="text-3xl font-bold">{user.username}</div>
-      <div className="text-3xl font-bold">{user.review}</div>
-    </>
-  );
-};
+// const UserComponent = async (user: UserProps) => {
+//   return (
+//     <>
+//       <div className="text-3xl font-bold">{user.username}</div>
+//       <div className="text-3xl font-bold">{user.review}</div>
+//     </>
+//   );
+// };
 
-export async function streamComponent(messages: CoreMessage[]) {
+const UserComponent = (props: UserProps) => (
+  <div className="border border-neutral-200 p-4 rounded-lg max-w-fit">
+    The profile is : {props.username} and the review is: {props.review}
+  </div>
+);
+
+export async function streamComponent() {
   const result = await streamUI({
     model: model("gemini-1.5-flash-latest", {
       safetySettings: [

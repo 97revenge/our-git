@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 // import { streamComponent } from "./actions";
 import { ArrowRightIcon } from "lucide-react";
-import { streamComponent } from "@/actions/actions";
+import { streamComponent } from "@/actions/user";
 
 export const LandingContainer = () => {
   const [component, setComponent] = useState<React.ReactNode>();
