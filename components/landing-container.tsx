@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { streamComponent } from "@/actions/user";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon, Github, Globe, Twitter } from "lucide-react";
 import AnimatedBeam from "./animata/animated-beam";
 
 import z from "zod";
@@ -17,35 +17,25 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { EnchancedProfileCard, ThemeToggle } from "./EnchancedProfileCard";
+import {
+  EnchancedProfileCard,
+  SocialLink,
+  ThemeToggle,
+} from "./EnchancedProfileCard";
 import { ScrollArea } from "./ui/scroll-area";
+import { mock } from "@/actions/mock";
+import { Badge } from "./ui/badge";
 
 export const LandingContainer = () => {
+  const [isPending, startTransition] = useTransition();
+
   const [component, setComponent] = useState<React.ReactNode>();
 
   const [view, setView] = useState<boolean>(false);
 
-  const popularSchema = z.object({
-    name: z.string(),
-  });
-
-  interface PopularSchema extends z.infer<typeof popularSchema> {}
-
-  const popularDevelopers: PopularSchema[] = [
-    { name: "shadcn" },
-    { name: "shuding" },
-    { name: "lucasmontano" },
-    { name: "iteratetograceness" },
-    { name: "jaredpalmer " },
-    { name: "swyxdotio" },
-    { name: "arturbien" },
-    { name: "kadikraman" },
-    { name: "developit" },
-  ];
-
   const [input, setInput] = useState<any>("");
 
-  const [dev, setDev] = useState<z.infer<typeof userSchema>>(undefined);
+  const [dev, setDev] = useState<z.infer<typeof userSchema>[]>([]);
 
   const handler = async (e: any) => {
     e.preventDefault();
@@ -62,6 +52,20 @@ export const LandingContainer = () => {
       document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
+
+  useEffect(() => {
+    async function getDevelopers() {
+      try {
+        const { instance } = await mock();
+        setDev(instance);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.log(error.cause);
+        }
+      }
+    }
+    startTransition(getDevelopers);
+  }, []);
 
   return (
     <>
@@ -153,26 +157,85 @@ export const LandingContainer = () => {
                 </h2>
                 <ScrollArea className="h-[500px] w-full px-auto flex items-center justify-center ">
                   <div className=" transition-all grid grid-cols-1 grid-flow-row sm:grid-cols-2    md:grid-cols-2 w-full  gap-4  ">
-                    {popularDevelopers.map((item, index) => {
-                      let data: z.infer<typeof userSchema>;
-
-                      async function getDevelopers() {
-                        try {
-                          const response = await fetch(
-                            `https://api.github.com/users/${item}`
-                          );
-                          data = await response.json();
-                          setDev(data);
-                        } catch (error) {
-                          if (error instanceof Error) {
-                            console.log(error.cause);
-                          }
-                        }
-                      }
-                      getDevelopers();
+                    {dev.map((item, index) => {
                       return (
                         <>
-                          <EnchancedProfileCard />
+                          <EnchancedProfileCard>
+                            <article className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-colors duration-300">
+                              <div className="p-4">
+                                <div className="flex items-center space-x-2 mb-2">
+                                  <Image
+                                    alt="Claire Mac"
+                                    src={`${item?.avatar_url}`}
+                                    quality={100}
+                                    className="w-16 h-16 rounded-full object-cover"
+                                    width={16}
+                                    height={16}
+                                  />
+                                  <div>
+                                    <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                      {item?.name}
+                                    </h1>
+                                    <Badge
+                                      variant={"secondary"}
+                                      className="text-sm text-primary dark:text-secondary"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        className="mr-1 bg-white rounded-full"
+                                      >
+                                        <path
+                                          fill="#cf83a4"
+                                          d="M12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12q0-.175-.012-.363t-.013-.312q-.125.725-.675 1.2T18 13h-2q-.825 0-1.412-.587T14 11v-1h-4V8q0-.825.588-1.412T12 6h1q0-.575.313-1.012t.762-.713q-.5-.125-1.012-.2T12 4Q8.65 4 6.325 6.325T4 12h5q1.65 0 2.825 1.175T13 16v1h-3v2.75q.5.125.988.188T12 20"
+                                        />
+                                      </svg>{" "}
+                                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                                        {item?.location}
+                                      </p>
+                                    </Badge>
+                                  </div>
+                                </div>
+                                <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                                  {item?.bio}
+                                </p>
+                                <div className="flex justify-start space-x-4">
+                                  <Badge
+                                    className="rounded-full"
+                                    variant={"secondary"}
+                                  >
+                                    <SocialLink
+                                      href={`https://twitter.com/${item?.twitter_username}`}
+                                      icon={<Twitter size={18} />}
+                                      label="Twitter"
+                                    />
+                                  </Badge>
+                                  <Badge
+                                    className="rounded-full"
+                                    variant={"secondary"}
+                                  >
+                                    <SocialLink
+                                      href={item?.html_url}
+                                      icon={<Github size={18} />}
+                                      label="GitHub"
+                                    />
+                                  </Badge>
+                                  <Badge
+                                    className="rounded-full"
+                                    variant={"secondary"}
+                                  >
+                                    <SocialLink
+                                      href={item?.blog}
+                                      icon={<Globe size={18} />}
+                                      label="Website"
+                                    />
+                                  </Badge>
+                                </div>
+                              </div>
+                            </article>
+                          </EnchancedProfileCard>
                         </>
                       );
                     })}
