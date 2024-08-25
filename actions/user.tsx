@@ -5,6 +5,8 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import z from "zod";
 import { SimpleLoader } from "@/components/SimpleLoader";
 import { CoreMessage, streamText } from "ai";
+import { ConfettiComponent } from "@/components/confetti";
+import React from "react";
 
 let textContext: string;
 
@@ -40,6 +42,7 @@ const getUser = async (username: string) => {
 
 const UserComponent = (props: UserProps) => {
   "use client";
+
   return (
     <>
       <div className="border border-neutral-200 p-4 rounded-lg max-w-fit">

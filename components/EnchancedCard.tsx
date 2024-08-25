@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -67,8 +69,8 @@ export const EnchancedCard = () => {
   );
 
   return (
-    <Card className="w-full max-w-3xl overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-indigo-600 opacity-10 animate-pulse"></div>
+    <Card className="w-full max-w-xl overflow-hidden">
+      <div className="bg-gradient-to-br from-purple-400 to-indigo-600 opacity-10 animate-pulse"></div>
       <CardHeader className="relative flex flex-row items-center space-y-0 pb-2">
         <Avatar className="h-24 w-24 ring-4 ring-white">
           <AvatarImage src={user.avatar_url} alt={user.name} />
@@ -140,7 +142,7 @@ export const EnchancedCard = () => {
             <TabsTrigger value="review">Review</TabsTrigger>
           </TabsList>
           <TabsContent value="overview" className="py-4">
-            <div className="grid grid-cols-2 gap-8">
+            <div className="transition-all grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div>
                 <h3 className="mb-2 text-lg font-semibold">Stats</h3>
                 <div className="space-y-2">
