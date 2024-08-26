@@ -7,6 +7,9 @@ import { SimpleLoader } from "@/components/SimpleLoader";
 import { CoreMessage, streamText } from "ai";
 import { ConfettiComponent } from "@/components/confetti";
 import React from "react";
+import { EnchancedCard } from "@/components/EnchancedCard";
+import { userSchema } from "@/lib/zod/user";
+import { MinimalistProfile } from "@/components/minimalistProfile";
 
 let textContext: string;
 
@@ -16,14 +19,13 @@ const model = createGoogleGenerativeAI({
 
 type UserProps = {
   username: string;
-  id: number;
-  review: any;
+  review: string;
 };
 
 const getUser = async (username: string) => {
   const response = await fetch(`https://api.github.com/users/${username}`);
 
-  const data = await response.json();
+  const data: z.infer<typeof userSchema> = await response.json();
 
   const { textStream } = await streamText({
     model: model("gemini-1.5-flash-latest"),
@@ -48,8 +50,7 @@ const UserComponent = (props: UserProps) => {
       <div className="border border-neutral-200 p-4 rounded-lg max-w-fit">
         <ul>
           <li> The profile is : {props.username}</li>
-          <li>the id is : {props.id}</li>
-          <li>{props.review}</li>
+          <li> The review is : {props.review}</li>
         </ul>
       </div>
     </>
@@ -80,10 +81,44 @@ export async function streamComponent(message: string) {
           yield <SimpleLoader />;
           const user = await getUser(message);
 
-          const { username, id } = user.data;
           const { value } = user;
 
-          return <UserComponent username={username} id={id} review={value} />;
+          return (
+            <MinimalistProfile
+              name={user.data?.name as string}
+              bio={user.data?.bio as string}
+              repos_url={user.data?.repos_url as string}
+              gists_url={user.data?.gists_url as string}
+              followers={user.data?.followers as number}
+              following={user.data?.following as number}
+              created_at={user.data?.created_at as string}
+              updated_at={user.data?.updated_at as string}
+              login={""}
+              id={0}
+              node_id={""}
+              avatar_url={""}
+              gravatar_id={""}
+              url={""}
+              html_url={""}
+              followers_url={""}
+              following_url={""}
+              starred_url={""}
+              subscriptions_url={""}
+              organizations_url={""}
+              events_url={""}
+              received_events_url={""}
+              type={"User"}
+              site_admin={false}
+              company={null}
+              blog={""}
+              location={""}
+              email={null}
+              hireable={null}
+              twitter_username={null}
+              public_repos={0}
+              public_gists={0}
+            />
+          );
         },
       },
     },
