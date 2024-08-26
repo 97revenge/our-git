@@ -33,6 +33,7 @@ export const userSchema = z.object({
   following: z.number(),
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),
+  review: z.string().optional(),
 }).optional();
 
 

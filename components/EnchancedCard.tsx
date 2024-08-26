@@ -54,8 +54,8 @@ export const EnchancedCard = ({
 
   review,
 }: {
-  username: string;
-  review: string;
+  username?: string;
+  review?: string;
 }) => {
   const [activeTab, setActiveTab] = useState("overview");
 
