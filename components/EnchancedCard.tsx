@@ -1,6 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import z from "zod";
+
+import { useSearchParams } from "next/navigation";
+
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +25,8 @@ import {
   BriefcaseIcon,
   StarIcon,
 } from "lucide-react";
+import { mock } from "@/actions/mock";
+import { userSchema } from "@/lib/zod/user";
 
 const user = {
   login: "johndoe",
@@ -61,11 +67,32 @@ const StarRating = ({ rating }: { rating: number }) => {
 export const EnchancedCard = () => {
   const [activeTab, setActiveTab] = useState("overview");
 
+  const [dev, setDev] = useState<z.infer<typeof userSchema>>(undefined);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const search = searchParams.get("user");
+
+    const getUserByGitHub = async () => {
+      try {
+        const response = await fetch(`https://api.github.com/users/${search}`);
+        const data = await response.json();
+        setDev(data);
+      } catch (error) {
+        if (error instanceof Error) {
+          alert(error.cause);
+        }
+      }
+    };
+    getUserByGitHub();
+  }, []);
+
   const maxStat = Math.max(
-    user.public_repos,
-    user.public_gists,
-    user.followers,
-    user.following
+    dev?.public_repos || 0,
+    dev?.public_gists || 0,
+    dev?.followers || 0,
+    dev?.following || 0
   );
 
   return (
@@ -73,14 +100,14 @@ export const EnchancedCard = () => {
       <div className="bg-gradient-to-br from-purple-400 to-indigo-600 opacity-10 animate-pulse"></div>
       <CardHeader className="relative flex flex-row items-center space-y-0 pb-2">
         <Avatar className="h-24 w-24 ring-4 ring-white">
-          <AvatarImage src={user.avatar_url} alt={user.name} />
+          <AvatarImage src={dev?.avatar_url} alt={`${dev?.name}`} />
           <AvatarFallback>
-            {user.login.slice(0, 2).toUpperCase()}
+            {dev?.login.slice(0, 2).toUpperCase()}
           </AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <CardTitle className="text-3xl font-bold">{user.name}</CardTitle>
-          <CardDescription className="text-lg">@{user.login}</CardDescription>
+          <CardTitle className="text-3xl font-bold">{dev?.name}</CardTitle>
+          <CardDescription className="text-lg">@{dev?.login}</CardDescription>
         </div>
         <Button className="ml-auto" variant="outline">
           Follow
@@ -88,52 +115,52 @@ export const EnchancedCard = () => {
       </CardHeader>
       <CardContent className="relative">
         <div className="mb-4 flex flex-wrap gap-2">
-          {user.company && (
+          {dev?.company && (
             <Badge
               variant="secondary"
               className="transition-all hover:scale-105"
             >
               <BriefcaseIcon className="mr-1 h-3 w-3" />
-              {user.company}
+              {dev?.company}
             </Badge>
           )}
-          {user.location && (
+          {dev?.location && (
             <Badge
               variant="secondary"
               className="transition-all hover:scale-105"
             >
               <MapPinIcon className="mr-1 h-3 w-3" />
-              {user.location}
+              {dev?.location}
             </Badge>
           )}
-          {user.email && (
+          {dev?.email && (
             <Badge
               variant="secondary"
               className="transition-all hover:scale-105"
             >
               <MailIcon className="mr-1 h-3 w-3" />
-              {user.email}
+              {dev?.email}
             </Badge>
           )}
-          {user.blog && (
+          {dev?.blog && (
             <Badge
               variant="secondary"
               className="transition-all hover:scale-105"
             >
               <GlobeIcon className="mr-1 h-3 w-3" />
-              {user.blog}
+              {dev?.blog}
             </Badge>
           )}
-          {user.twitter_username && (
+          {dev?.twitter_username && (
             <Badge
               variant="secondary"
               className="transition-all hover:scale-105"
             >
-              <TwitterIcon className="mr-1 h-3 w-3" />@{user.twitter_username}
+              <TwitterIcon className="mr-1 h-3 w-3" />@{dev?.twitter_username}
             </Badge>
           )}
         </div>
-        <p className="mb-4 text-sm text-muted-foreground">{user.bio}</p>
+        <p className="mb-4 text-sm text-muted-foreground">{dev?.bio}</p>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -147,10 +174,10 @@ export const EnchancedCard = () => {
                 <h3 className="mb-2 text-lg font-semibold">Stats</h3>
                 <div className="space-y-2">
                   {Object.entries({
-                    "Public Repos": user.public_repos,
-                    "Public Gists": user.public_gists,
-                    Followers: user.followers,
-                    Following: user.following,
+                    "Public Repos": dev?.public_repos || 0,
+                    "Public Gists": dev?.public_gists || 0,
+                    Followers: dev?.followers || 0,
+                    Following: dev?.following || 0,
                   }).map(([label, value]) => (
                     <div key={label} className="flex items-center">
                       <span className="w-32 text-sm">{label}:</span>
@@ -179,8 +206,11 @@ export const EnchancedCard = () => {
                     strokeWidth="2"
                   />
                   {[
-                    { date: new Date(user.created_at), label: "Joined" },
-                    { date: new Date(user.updated_at), label: "Last Update" },
+                    { date: new Date(dev?.created_at as any), label: "Joined" },
+                    {
+                      date: new Date(dev?.updated_at as any),
+                      label: "Last Update",
+                    },
                   ].map((event, index) => {
                     const x = index * 250 + 25;
                     return (
@@ -218,10 +248,11 @@ export const EnchancedCard = () => {
               </div>
               <p className="text-sm text-gray-600 mb-4">
                 John Doe is an active and engaged developer with a strong
-                presence in the open-source community. With {user.public_repos}{" "}
-                public repositories and {user.followers} followers, theyve
+                presence in the open-source community. With {dev?.public_repos}{" "}
+                public repositories and {dev?.followers} followers, theyve
                 clearly made a significant impact. Their consistent activity
-                since joining in {new Date(user.created_at).getFullYear()} shows
+                since joining in{" "}
+                {new Date(dev?.created_at as any).getFullYear()} shows
                 dedication to their craft.
               </p>
               <div className="space-y-2">
