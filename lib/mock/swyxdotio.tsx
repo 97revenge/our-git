@@ -1,0 +1,38 @@
+import z from "zod";
+import { userSchema } from "../zod/user";
+
+export const swyxdotio: z.infer<typeof userSchema> = {
+  login: "swyxdotio",
+  id: 100006,
+  node_id: "MDQ6VXNlcjEwMDAwNg==",
+  avatar_url: "https://avatars.githubusercontent.com/u/100006?v=4",
+  gravatar_id: "",
+  url: "https://api.github.com/users/swyxdotio",
+  html_url: "https://github.com/swyxdotio",
+  followers_url: "https://api.github.com/users/swyxdotio/followers",
+  following_url:
+    "https://api.github.com/users/swyxdotio/following{/other_user}",
+  gists_url: "https://api.github.com/users/swyxdotio/gists{/gist_id}",
+  starred_url: "https://api.github.com/users/swyxdotio/starred{/owner}{/repo}",
+  subscriptions_url: "https://api.github.com/users/swyxdotio/subscriptions",
+  organizations_url: "https://api.github.com/users/swyxdotio/orgs",
+  repos_url: "https://api.github.com/users/swyxdotio/repos",
+  events_url: "https://api.github.com/users/swyxdotio/events{/privacy}",
+  received_events_url: "https://api.github.com/users/swyxdotio/received_events",
+  type: "User",
+  site_admin: false,
+  name: "Shawn Wang",
+  company: "Temporal",
+  blog: "https://www.swyx.io",
+  location: "Singapore",
+  email: "swyx@swyx.io",
+  hireable: false,
+  bio: "Learning in public. Developer Experience Lead at Temporal. Author and speaker.",
+  twitter_username: "swyx",
+  public_repos: 55,
+  public_gists: 7,
+  followers: 3500,
+  following: 400,
+  created_at: "2017-03-12T11:11:11Z",
+  updated_at: "2024-07-20T12:30:25Z",
+};

@@ -4,13 +4,24 @@ import { useState, useEffect } from "react";
 import { Sun, Moon, Twitter, Github, Globe } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { FadeUp } from "./motion-variants/fade-up";
+import { useIntersectionObserver } from "usehooks-ts";
 
 export const EnchancedProfileCard = ({ ...props }) => {
+  const { isIntersecting, ref } = useIntersectionObserver();
+
   return (
     <>
-      <FadeUp stagger={0}>
-        <div className="w-full max-w-sm" {...props}></div>
-      </FadeUp>
+      <div ref={ref}>
+        {isIntersecting == true ? (
+          <>
+            <FadeUp stagger={0}>
+              <div className="w-full max-w-sm" {...props}></div>
+            </FadeUp>
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
     </>
   );
 };

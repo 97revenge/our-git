@@ -25,6 +25,7 @@ import {
 import { ScrollArea } from "./ui/scroll-area";
 import { mock } from "@/actions/mock";
 import { Badge } from "./ui/badge";
+import Link from "next/link";
 
 export const LandingContainer = () => {
   const [isPending, startTransition] = useTransition();
@@ -113,14 +114,14 @@ export const LandingContainer = () => {
                     />
                     <ShimmerButton
                       type="submit"
-                      className="transition-all  text-white rounded-full px-6 py-2 hover:bg-primary transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                      className="transition-all  text-white rounded-full px-6 py-2 hover:bg-primary duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     >
                       Send{" "}
                       <ArrowRightIcon className="transition-all ml-2 h-4 w-4" />
                     </ShimmerButton>
 
                     <DropdownMenu>
-                      <div className="transition-all  text-white rounded-full px-6 py-2 hover:bg-primary/20 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400/20">
+                      <div className="transition-all  text-white rounded-full px-6 py-2 hover:bg-primary/20 duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400/20">
                         <DropdownMenuTrigger asChild>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -146,9 +147,9 @@ export const LandingContainer = () => {
                     </DropdownMenu>
                   </div>
                 </form>
-                <p className="transition-all text-sm font-bold drop-shadow-md text-red-800 text-center">
+                {/* <p className="transition-all text-sm font-bold drop-shadow-md text-red-800 text-center">
                   lorem ipsum lorem ipsum lorem ipsum
-                </p>
+                </p> */}
               </div>
 
               <div className="transition-all  w-full max-w-3xl p-4 ">
@@ -156,85 +157,87 @@ export const LandingContainer = () => {
                   Popular Developers
                 </h2>
                 <ScrollArea className="h-[500px] w-full px-auto flex items-center justify-center ">
-                  <div className=" transition-all grid grid-cols-1 grid-flow-row sm:grid-cols-2    md:grid-cols-2 w-full  gap-4  ">
+                  <div className=" transition-all grid grid-cols-1 grid-flow-row sm:grid-cols-2    md:grid-cols-2 w-full  gap-4   ">
                     {dev.map((item, index) => {
                       return (
                         <>
                           <EnchancedProfileCard>
-                            <article className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-colors duration-300">
-                              <div className="p-4">
-                                <div className="flex items-center space-x-2 mb-2">
-                                  <Image
-                                    alt="Claire Mac"
-                                    src={`${item?.avatar_url}`}
-                                    quality={100}
-                                    className="w-16 h-16 rounded-full object-cover"
-                                    width={16}
-                                    height={16}
-                                  />
-                                  <div>
-                                    <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-                                      {item?.name}
-                                    </h1>
-                                    <Badge
-                                      variant={"secondary"}
-                                      className="text-sm text-primary dark:text-secondary"
-                                    >
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        className="mr-1 bg-white rounded-full"
+                            <Link href={`/test?user=${item?.login}`}>
+                              <article className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-colors duration-300 max-h-full ">
+                                <div className="p-4">
+                                  <div className="flex items-center space-x-2 mb-2">
+                                    <Image
+                                      alt="Claire Mac"
+                                      src={`${item?.avatar_url}`}
+                                      quality={100}
+                                      className="w-16 h-16 rounded-full object-cover"
+                                      width={16}
+                                      height={16}
+                                    />
+                                    <div>
+                                      <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                        {item?.name}
+                                      </h1>
+                                      <Badge
+                                        variant={"secondary"}
+                                        className="text-sm text-primary dark:text-secondary"
                                       >
-                                        <path
-                                          fill="#cf83a4"
-                                          d="M12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12q0-.175-.012-.363t-.013-.312q-.125.725-.675 1.2T18 13h-2q-.825 0-1.412-.587T14 11v-1h-4V8q0-.825.588-1.412T12 6h1q0-.575.313-1.012t.762-.713q-.5-.125-1.012-.2T12 4Q8.65 4 6.325 6.325T4 12h5q1.65 0 2.825 1.175T13 16v1h-3v2.75q.5.125.988.188T12 20"
-                                        />
-                                      </svg>{" "}
-                                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                                        {item?.location}
-                                      </p>
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="16"
+                                          height="16"
+                                          viewBox="0 0 24 24"
+                                          className="mr-1 bg-white rounded-full"
+                                        >
+                                          <path
+                                            fill="#cf83a4"
+                                            d="M12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12q0-.175-.012-.363t-.013-.312q-.125.725-.675 1.2T18 13h-2q-.825 0-1.412-.587T14 11v-1h-4V8q0-.825.588-1.412T12 6h1q0-.575.313-1.012t.762-.713q-.5-.125-1.012-.2T12 4Q8.65 4 6.325 6.325T4 12h5q1.65 0 2.825 1.175T13 16v1h-3v2.75q.5.125.988.188T12 20"
+                                          />
+                                        </svg>{" "}
+                                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                                          {item?.location}
+                                        </p>
+                                      </Badge>
+                                    </div>
+                                  </div>
+                                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                                    {item?.bio}
+                                  </p>
+                                  <div className="flex justify-start space-x-4">
+                                    <Badge
+                                      className="rounded-full"
+                                      variant={"secondary"}
+                                    >
+                                      <SocialLink
+                                        href={`https://twitter.com/${item?.twitter_username}`}
+                                        icon={<Twitter size={18} />}
+                                        label="Twitter"
+                                      />
+                                    </Badge>
+                                    <Badge
+                                      className="rounded-full"
+                                      variant={"secondary"}
+                                    >
+                                      <SocialLink
+                                        href={item?.html_url}
+                                        icon={<Github size={18} />}
+                                        label="GitHub"
+                                      />
+                                    </Badge>
+                                    <Badge
+                                      className="rounded-full"
+                                      variant={"secondary"}
+                                    >
+                                      <SocialLink
+                                        href={item?.blog}
+                                        icon={<Globe size={18} />}
+                                        label="Website"
+                                      />
                                     </Badge>
                                   </div>
                                 </div>
-                                <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                                  {item?.bio}
-                                </p>
-                                <div className="flex justify-start space-x-4">
-                                  <Badge
-                                    className="rounded-full"
-                                    variant={"secondary"}
-                                  >
-                                    <SocialLink
-                                      href={`https://twitter.com/${item?.twitter_username}`}
-                                      icon={<Twitter size={18} />}
-                                      label="Twitter"
-                                    />
-                                  </Badge>
-                                  <Badge
-                                    className="rounded-full"
-                                    variant={"secondary"}
-                                  >
-                                    <SocialLink
-                                      href={item?.html_url}
-                                      icon={<Github size={18} />}
-                                      label="GitHub"
-                                    />
-                                  </Badge>
-                                  <Badge
-                                    className="rounded-full"
-                                    variant={"secondary"}
-                                  >
-                                    <SocialLink
-                                      href={item?.blog}
-                                      icon={<Globe size={18} />}
-                                      label="Website"
-                                    />
-                                  </Badge>
-                                </div>
-                              </div>
-                            </article>
+                              </article>
+                            </Link>
                           </EnchancedProfileCard>
                         </>
                       );

@@ -1,0 +1,37 @@
+import z from 'zod';
+import { userSchema } from '../zod/user';
+
+export const arturbien: z.infer<typeof userSchema> = {
+  "login": "arturbien",
+  "id": 100007,
+  "node_id": "MDQ6VXNlcjEwMDAwNw==",
+  "avatar_url": "https://avatars.githubusercontent.com/u/100007?v=4",
+  "gravatar_id": "",
+  "url": "https://api.github.com/users/arturbien",
+  "html_url": "https://github.com/arturbien",
+  "followers_url": "https://api.github.com/users/arturbien/followers",
+  "following_url": "https://api.github.com/users/arturbien/following{/other_user}",
+  "gists_url": "https://api.github.com/users/arturbien/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/arturbien/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/arturbien/subscriptions",
+  "organizations_url": "https://api.github.com/users/arturbien/orgs",
+  "repos_url": "https://api.github.com/users/arturbien/repos",
+  "events_url": "https://api.github.com/users/arturbien/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/arturbien/received_events",
+  "type": "User",
+  "site_admin": false,
+  "name": "Artur Bien",
+  "company": null,
+  "blog": "https://arturbien.com",
+  "location": "Warsaw, Poland",
+  "email": null,
+  "hireable": true,
+  "bio": "UI/UX Designer and Frontend Developer creating intuitive and beautiful interfaces.",
+  "twitter_username": "arturbien",
+  "public_repos": 20,
+  "public_gists": 1,
+  "followers": 900,
+  "following": 80,
+  "created_at": "2018-05-25T10:05:50Z",
+  "updated_at": "2024-08-05T18:15:35Z"
+}
