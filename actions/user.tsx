@@ -11,6 +11,7 @@ import { EnchancedCard } from "@/components/EnchancedCard";
 import { userSchema } from "@/lib/zod/user";
 import { MinimalistProfile } from "@/components/minimalistProfile";
 import { repoSchema } from "@/lib/zod/owner";
+import { ArticleAI } from "@/components/ArticleAI";
 
 let textContext: string;
 
@@ -109,15 +110,7 @@ export async function streamComponent(message: string) {
           const { value, data } = user;
 
           return (
-            <MinimalistProfile
-              name={data?.name as string}
-              bio={data?.bio as string}
-              repos_url={data?.repos_url as string}
-              gists_url={data?.gists_url as string}
-              followers={data?.followers as number}
-              following={data?.following as number}
-              created_at={data?.created_at as string}
-              updated_at={data?.updated_at as string}
+            <ArticleAI
               login={""}
               id={0}
               node_id={""}
@@ -127,22 +120,29 @@ export async function streamComponent(message: string) {
               html_url={""}
               followers_url={""}
               following_url={""}
+              gists_url={""}
               starred_url={""}
               subscriptions_url={""}
               organizations_url={""}
+              repos_url={""}
               events_url={""}
               received_events_url={""}
               type={"User"}
               site_admin={false}
+              name={null}
               company={null}
               blog={""}
               location={""}
               email={null}
               hireable={null}
+              bio={null}
               twitter_username={null}
               public_repos={0}
               public_gists={0}
-              review={value}
+              followers={0}
+              following={0}
+              created_at={""}
+              updated_at={""}
             />
           );
         },

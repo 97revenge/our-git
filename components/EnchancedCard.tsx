@@ -2,8 +2,6 @@
 
 import z from "zod";
 
-import { useSearchParams } from "next/navigation";
-
 import { useEffect, useState, useTransition } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -17,7 +15,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import {
-  GithubIcon,
   TwitterIcon,
   GlobeIcon,
   MapPinIcon,
@@ -25,12 +22,9 @@ import {
   BriefcaseIcon,
   StarIcon,
 } from "lucide-react";
-import { mock } from "@/actions/mock";
 import { userSchema } from "@/lib/zod/user";
-import { RoundedChard } from "./rounded-chart";
 import SparklesText from "./magicui/sparkles-text";
 import NumberTicker from "./magicui/number-ticker";
-import { GitHubProfileExtended } from "./GitHubProfileExtended";
 import { FadeUp } from "./motion-variants/fade-up";
 
 const StarRating = ({ rating }: { rating: number }) => {
@@ -60,8 +54,6 @@ export const EnchancedCard = ({
   const [activeTab, setActiveTab] = useState("overview");
 
   const [dev, setDev] = useState<z.infer<typeof userSchema>>(undefined);
-
-  const searchParams = useSearchParams();
 
   const [isPending, startTransition] = useTransition();
 
