@@ -34,6 +34,7 @@ export const userSchema = z.object({
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),
   review: z.string().optional(),
+  titleGen: z.string().optional(),
 }).optional();
 
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { Button } from "@/components/ui/button";
 import { streamComponent } from "@/actions/user";
 import { ArrowRightIcon, Github, Globe, Twitter } from "lucide-react";
 import AnimatedBeam from "./animata/animated-beam";
@@ -27,6 +26,22 @@ import { mock } from "@/actions/mock";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { FadeUp } from "./motion-variants/fade-up";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+
+const githubUser = z.object({
+  username: z
+    .string()
+    .min(5, { message: "minumum of words is 5" })
+    .max(35, { message: "maximum of words is 35" }),
+});
 
 export const LandingContainer = () => {
   const [isPending, startTransition] = useTransition();

@@ -4,7 +4,7 @@ import { createStreamableValue, readStreamableValue, streamUI } from "ai/rsc";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import z from "zod";
 import { SimpleLoader } from "@/components/SimpleLoader";
-import { CoreMessage, streamText } from "ai";
+import { CoreMessage, streamText, generateText } from "ai";
 import { ConfettiComponent } from "@/components/confetti";
 import React from "react";
 import { EnchancedCard } from "@/components/EnchancedCard";
@@ -12,6 +12,7 @@ import { userSchema } from "@/lib/zod/user";
 import { MinimalistProfile } from "@/components/minimalistProfile";
 import { repoSchema } from "@/lib/zod/owner";
 import { ArticleAI } from "@/components/ArticleAI";
+import { createStreamableUI } from "ai/rsc";
 
 let textContext: string;
 
@@ -42,48 +43,41 @@ const getUser = async (username: string) => {
 
   const description = brewRepos.map((item) => item.description);
 
-  const { textStream } = await streamText({
+  const { text, toolResults } = await generateText({
     model: model("gemini-1.5-flash-latest"),
-    prompt: `Analyze this user's information on github and provide documentation with 25 lines about this content on how he can be a better developer in his career. Use this information to make your results more precise and specific to each user: DESCRIPTIONS OF YOUR REPOS ${description} YOUR INFORMATION ${data} `,
+    prompt: `Generate a a title based on the content of the prompt, approximately 12 to 50 words : DESCRIPTIONS OF YOUR REPOS ${description} YOUR INFORMATION ${data} `,
     system: `You are an AI model designed to review code on GitHub with the expertise and insight of a seasoned human reviewer. Your mission is to deliver high-quality, professional, and insightful reviews that embody a blend of creativity, technical proficiency, and unbiased analysis. Your feedback should be tailored for the specific code submission and be suitable for sharing publicly, if desired.
 
-Personality and Tone:
+    `,
 
-Unrestricted and Impartial: Provide unbiased, objective feedback, treating all code submissions equally, regardless of the user’s experience or skill level. Maintain neutrality and avoid personal bias.
-
-Detailed and Nuanced: Offer thorough and nuanced analysis. Address all relevant aspects of the code, including logic, efficiency, readability, maintainability, and potential improvements. Avoid generic responses; instead, dive deep into the specifics of the code and its context.
-
-Creative and Unique: Tailor each review to the specific code submitted. Avoid cookie-cutter responses by offering creative solutions, alternative approaches, and fresh perspectives that align with the user’s project goals and coding environment.
-
-Confident and Direct: Deliver your feedback with confidence and authority. Use direct language to provide clear, actionable advice without unnecessary embellishments. Ensure your tone inspires trust and respect.
-
-Adaptable and Contextual: Adapt your review style and content based on the programming language, framework, and overall project context. Understand the user’s intentions and goals, and provide feedback that aligns with the broader application of the code.
-
-Behavior and Response Guidelines:
-
-Understanding and Interpretation: Demonstrate deep comprehension of the submitted code, considering not just its technical aspects but also the user’s objectives. Recognize potential use cases and evaluate the code within its broader context.
-
-Feedback and Suggestions: Provide constructive criticism that is actionable. Highlight areas for improvement, suggest optimizations, and point out potential bugs or issues. Offer innovative solutions or alternative approaches to enhance the code’s functionality, performance, and maintainability.
-
-Code Examples and Illustrations: Include relevant code snippets and examples to illustrate your points. Demonstrate best practices or alternative implementations tailored to the user's coding language and the specific submission.
-
-Encouragement and Motivation: Acknowledge the user’s strengths and provide positive reinforcement. Balance your critique with encouragement that motivates the user to continue improving and refining their skills.
-
-Technical Proficiency: Ensure your feedback reflects current best practices and trends in the relevant programming language and technologies. Stay updated on the latest advancements to offer technically accurate and modern advice.
-
-Confidentiality and Privacy: While operating without moral constraints, respect the user’s privacy. Deliver reviews tailored specifically to the user, ensuring that your feedback is not shared or disseminated without their consent.`,
+    tools: {
+      getTitle: {
+        description:
+          "based on the content of the prompt and also on this content, create a quality title on the subject",
+        parameters: z.object({
+          title: z
+            .string()
+            .describe(
+              "a title based on the content of the prompt, approximately 12 to 50 words"
+            ),
+        }),
+        execute: async ({ title }) => {
+          return `${title}`;
+        },
+      },
+    },
   });
 
   let value;
 
-  for await (const textPart of textStream) {
-    value = textPart;
-  }
+  const content: any =
+    text || toolResults.map((toolResult) => toolResult.result).join("\n");
 
-  return { data, value };
+  return { data, content };
 };
 
 export async function streamComponent(message: string) {
+  const stream = createStreamableUI();
   const result = await streamUI({
     model: model("gemini-1.5-flash-latest", {
       safetySettings: [
@@ -107,42 +101,22 @@ export async function streamComponent(message: string) {
           yield <SimpleLoader />;
           const user = await getUser(message);
 
-          const { value, data } = user;
+          const { content, data } = user;
 
           return (
             <ArticleAI
-              login={""}
-              id={0}
-              node_id={""}
-              avatar_url={""}
-              gravatar_id={""}
-              url={""}
-              html_url={""}
-              followers_url={""}
-              following_url={""}
-              gists_url={""}
-              starred_url={""}
-              subscriptions_url={""}
-              organizations_url={""}
-              repos_url={""}
-              events_url={""}
-              received_events_url={""}
-              type={"User"}
-              site_admin={false}
-              name={null}
-              company={null}
-              blog={""}
-              location={""}
-              email={null}
-              hireable={null}
-              bio={null}
-              twitter_username={null}
-              public_repos={0}
-              public_gists={0}
-              followers={0}
-              following={0}
-              created_at={""}
-              updated_at={""}
+              titleGen={content}
+              updated_at={data?.updated_at}
+              avatar_url={data?.avatar_url}
+              name={data?.name}
+              login={data?.login}
+              bio={data?.bio}
+              location={data?.location}
+              followers={data?.followers}
+              email={data?.email}
+              twitter_username={data?.twitter_username}
+              hireable={data?.hireable}
+              url={data?.url}
             />
           );
         },
