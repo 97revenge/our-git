@@ -28,19 +28,13 @@ type UserProps = {
 
 const getUser = async (username: string) => {
   const response = await fetch(`https://api.github.com/users/${username}`);
-  const repos = await fetch(`https://api.github.com/users/${username}/repos`);
 
   const data: z.infer<typeof userSchema> = await response.json();
-
-  const brewRepos: Array<z.infer<typeof repoSchema>> = await repos.json();
-
-  const description = brewRepos.map((item) => item.description);
 
   return { data };
 };
 
 export async function streamComponent(message: string) {
-  const stream = createStreamableUI();
   const result = await streamUI({
     model: model("gemini-1.5-flash-latest", {
       safetySettings: [
