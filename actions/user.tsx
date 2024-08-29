@@ -13,6 +13,7 @@ import { MinimalistProfile } from "@/components/minimalistProfile";
 import { repoSchema } from "@/lib/zod/owner";
 import { ArticleAI } from "@/components/ArticleAI";
 import { createStreamableUI } from "ai/rsc";
+import { ProfileCardSkeleton } from "@/components/Skeletons/ProfileSkeleton";
 
 let textContext: string;
 
@@ -29,51 +30,13 @@ const getUser = async (username: string) => {
   const response = await fetch(`https://api.github.com/users/${username}`);
   const repos = await fetch(`https://api.github.com/users/${username}/repos`);
 
-  // const data: {
-  //   response: z.infer<typeof userSchema>;
-  //   repo: z.infer<typeof repoSchema>;
-  // } = {
-  //   response: await response.json(),
-  //   repo: await newResponse.repo.json(),
-  // };
-
   const data: z.infer<typeof userSchema> = await response.json();
 
   const brewRepos: Array<z.infer<typeof repoSchema>> = await repos.json();
 
   const description = brewRepos.map((item) => item.description);
 
-  const { text, toolResults } = await generateText({
-    model: model("gemini-1.5-flash-latest"),
-    prompt: `Generate a a title based on the content of the prompt, approximately 12 to 50 words : DESCRIPTIONS OF YOUR REPOS ${description} YOUR INFORMATION ${data} `,
-    system: `You are an AI model designed to review code on GitHub with the expertise and insight of a seasoned human reviewer. Your mission is to deliver high-quality, professional, and insightful reviews that embody a blend of creativity, technical proficiency, and unbiased analysis. Your feedback should be tailored for the specific code submission and be suitable for sharing publicly, if desired.
-
-    `,
-
-    tools: {
-      getTitle: {
-        description:
-          "based on the content of the prompt and also on this content, create a quality title on the subject",
-        parameters: z.object({
-          title: z
-            .string()
-            .describe(
-              "a title based on the content of the prompt, approximately 12 to 50 words"
-            ),
-        }),
-        execute: async ({ title }) => {
-          return `${title}`;
-        },
-      },
-    },
-  });
-
-  let value;
-
-  const content: any =
-    text || toolResults.map((toolResult) => toolResult.result).join("\n");
-
-  return { data, content };
+  return { data };
 };
 
 export async function streamComponent(message: string) {
@@ -98,14 +61,14 @@ export async function streamComponent(message: string) {
           username: z.string(),
         }),
         generate: async function* () {
-          yield <SimpleLoader />;
+          yield <ProfileCardSkeleton />;
           const user = await getUser(message);
 
-          const { content, data } = user;
+          const { data } = user;
 
           return (
             <ArticleAI
-              titleGen={content}
+              titleGen={"este é o texto..."}
               updated_at={data?.updated_at}
               avatar_url={data?.avatar_url}
               name={data?.name}
