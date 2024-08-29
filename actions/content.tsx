@@ -10,7 +10,6 @@ export const content = async (username = "97revenge") => {
 
   let treatmentData: { [index: string]: Array<any> } = {
     description: userRepos.map((item) => item.description),
-    language: userRepos.map((item) => item.language),
     name: userRepos.map((item) => item.name),
     code: [],
   };
