@@ -3,7 +3,7 @@
 import z from "zod";
 import { repoSchema } from "@/lib/zod/owner";
 
-export const content = async (username: string) => {
+export const content = async (username = "97revenge") => {
   const repos = await fetch(`https://api.github.com/users/${username}/repos`);
 
   const userRepos: Array<z.infer<typeof repoSchema>> = await repos.json();
@@ -12,17 +12,19 @@ export const content = async (username: string) => {
     description: userRepos.map((item) => item.description),
     language: userRepos.map((item) => item.language),
     name: userRepos.map((item) => item.name),
+    code: [],
   };
 
-  treatmentData.code = Array.from([treatmentData.name]).map(async (item) => {
-    const response = await fetch(
-      `https://api.github.com/repos/shadcn/${item}/languages`
-    );
+  const codeData = await Promise.all(
+    treatmentData.name.map(async (repoName) => {
+      const response = await fetch(
+        `https://api.github.com/repos/${username}/${repoName}/languages`
+      );
+      return response.json();
+    })
+  );
 
-    const data = await response.json();
-
-    treatmentData.code = [...treatmentData.code, data];
-  });
+  treatmentData.code = codeData;
 
   return {
     treatmentData,

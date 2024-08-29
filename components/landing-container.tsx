@@ -39,6 +39,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { LandingProfileSkeleton } from "./Skeletons/LandingProfileSkeleton";
+import { content } from "@/actions/content";
 
 const githubUser = z.object({
   username: z
@@ -76,6 +77,12 @@ export const LandingContainer = () => {
   useEffect(() => {
     async function getDevelopers() {
       try {
+        const { treatmentData } = await content();
+
+        const code: Array<any> = treatmentData?.code;
+
+        code.map((item: any) => console.log(item));
+
         const { instance } = await mock();
         setDev(instance);
       } catch (error) {
