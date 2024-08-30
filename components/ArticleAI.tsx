@@ -6,7 +6,7 @@ import { ArticleReview } from "./article-review";
 export const ArticleAI = (props: Partial<z.infer<typeof userSchema>>) => {
   return (
     <>
-      <div className="  flex items-center justify-center w-full h-full rounded-xl  ">
+      <div className="   ">
         <div className="w-full max-w-md bg-white dark:bg-gray-500/10  rounded-lg p-4  duration-300 transition-all shadow-md hover:shadow-xl">
           <div className="flex flex-col items-center mb-4">
             <img

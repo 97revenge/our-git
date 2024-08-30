@@ -1,7 +1,7 @@
 import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+
 import {
   Tooltip,
   TooltipContent,
@@ -26,6 +26,9 @@ import {
   Info,
 } from "lucide-react";
 import { z } from "zod";
+import { ChartComponent } from "./Chats/ChartComponent";
+import { NoteComponent } from "./Chats/NoteComponent";
+import { StatisticCard } from "./statistic-card";
 
 const userSchema = z
   .object({
@@ -90,7 +93,10 @@ export const MinimalistProfile = ({ ...props }) => {
     <>
       <TooltipProvider>
         <div className="transition-all w-full h-full flex items-center  flex-col justify-center pb-4   ">
-          <div className="w-full h-full p-2" {...props}></div>
+          <div className="w-full h-full p-4 flex flex-col md:flex-row items-center justify-center gap-2  ">
+            <NoteComponent />
+            <ChartComponent />
+          </div>
           <Card className="w-full max-w-3xl shadow-md hover:shadow-xl">
             <CardContent className="p-6">
               <div className="mt-8">
@@ -182,6 +188,9 @@ export const MinimalistProfile = ({ ...props }) => {
               </div>
             </CardContent>
           </Card>
+          <div className="p-6 w-auto">
+            <StatisticCard />
+          </div>
         </div>
       </TooltipProvider>
     </>
