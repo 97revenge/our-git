@@ -35,7 +35,6 @@ const getUser = async (username: string) => {
 };
 
 export async function streamComponent(message: string, developer?: any) {
-  console.log(message, developer[0].value);
   const result = await streamUI({
     model: model("gemini-1.5-flash-latest", {
       safetySettings: [

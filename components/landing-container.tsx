@@ -59,8 +59,17 @@ const OPTIONS: Option[] = [
 const githubUser = z.object({
   username: z
     .string()
-    .min(5, { message: "minumum of words is 5" })
-    .max(35, { message: "maximum of words is 35" }),
+    .min(5, { message: "Minimum of characters is 5" })
+    .max(35, { message: "Maximum of characters is 35" })
+    .refine(
+      async (val) => {
+        const response = await fetch(`https://api.github.com/users/${val}`);
+        return response.ok && response.status === 200;
+      },
+      {
+        message: "This user does not exist on GitHub",
+      }
+    ),
   developer: z.array(optionSchema).min(1),
 });
 
@@ -182,23 +191,33 @@ export const LandingContainer = () => {
                                       width="32"
                                       height="32"
                                       viewBox="0 0 24 24"
+                                      className={
+                                        form.formState.errors.developer
+                                          ? "transition-all animate-pulse"
+                                          : "transition-all "
+                                      }
                                     >
                                       <path
-                                        fill="#295dff"
+                                        fill={
+                                          form.formState.errors.developer
+                                            ? "#f60002"
+                                            : "#295dff"
+                                        }
+                                        className="transition-all"
                                         d="M17 21.025q-.2 0-.4-.05t-.375-.175l-3-1.75q-.35-.2-.537-.537t-.188-.738V14.25q0-.4.188-.737t.537-.538l3-1.75q.175-.125.375-.175T17 11t.388.063t.362.162l3 1.75q.35.2.55.538t.2.737v3.525q0 .4-.2.738t-.55.537l-3 1.75q-.175.1-.363.163t-.387.062M10 12q-1.65 0-2.825-1.175T6 8t1.175-2.825T10 4t2.825 1.175T14 8t-1.175 2.825T10 12m-8 8v-2.8q0-.825.425-1.55t1.175-1.1q1.275-.65 2.875-1.1T10 13h.35q.15 0 .3.05q-.2.45-.337.938T10.1 15H10q-1.775 0-3.187.45t-2.313.9q-.225.125-.363.35T4 17.2v.8h6.3q.15.525.4 1.038t.55.962zm8-10q.825 0 1.413-.587T12 8t-.587-1.412T10 6t-1.412.588T8 8t.588 1.413T10 10m4.65 3.85L17 15.225l2.35-1.375L17 12.5zm3.1 5.2l2.25-1.3V15l-2.25 1.325zM14 17.75l2.25 1.325V16.35L14 15.025z"
                                       />
                                     </svg>
                                   </DropdownMenuTrigger>
 
-                                  <DropdownMenuContent>
+                                  <DropdownMenuContent className="transition-all w-full  p-2 rounded-xl h-[250px]">
                                     <FormField
                                       control={form.control}
                                       name="developer"
                                       render={({ field }) => (
-                                        <div>
-                                          <FormItem>
+                                        <div className="">
+                                          <FormItem className=" p-2">
                                             <FormLabel>
-                                              Pedido feito pelo:
+                                              Choose your role
                                             </FormLabel>
                                             <FormControl>
                                               <MultipleSelector
@@ -211,10 +230,10 @@ export const LandingContainer = () => {
                                                     "Voçe só pode adicionar um."
                                                   )
                                                 }
-                                                placeholder="Selecione o provedor de pedido..."
+                                                placeholder="Select your role..."
                                                 emptyIndicator={
                                                   <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                                                    Sem mais resultados
+                                                    no more results...
                                                   </p>
                                                 }
                                               />
@@ -232,9 +251,15 @@ export const LandingContainer = () => {
                         )}
                       />
 
-                      {/* <p className="transition-all text-sm font-bold drop-shadow-md text-red-800 text-center">
-                  lorem ipsum lorem ipsum lorem ipsum
-                </p> */}
+                      {form.formState.errors.username && (
+                        <>
+                          <div className="w-full flex items-center justify-center ">
+                            <p className="fixed py-2 transition-all text-sm font-bold drop-shadow-md text-red-800 text-center">
+                              Your username requires be valid ...
+                            </p>
+                          </div>
+                        </>
+                      )}
                     </form>
                   </Form>
                 </div>
