@@ -40,12 +40,28 @@ import {
 } from "./ui/form";
 import { LandingProfileSkeleton } from "./Skeletons/LandingProfileSkeleton";
 import { content } from "@/actions/content";
+import MultipleSelector, { Option } from "./multiple-selector";
+
+const optionSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+  disable: z.boolean().optional(),
+});
+
+const OPTIONS: Option[] = [
+  { label: "Front-End Developer", value: "Front-End Developer" },
+  { label: "Back-End Developer", value: "Back-End Developer" },
+  { label: "Full Stack Developer", value: "Fullstack Developer" },
+  { label: "Data Analyst", value: "Data Analyst" },
+  { label: "Designer Developer", value: "Designer Developer" },
+];
 
 const githubUser = z.object({
   username: z
     .string()
     .min(5, { message: "minumum of words is 5" })
     .max(35, { message: "maximum of words is 35" }),
+  developer: z.array(optionSchema).min(1),
 });
 
 export const LandingContainer = () => {
@@ -60,7 +76,7 @@ export const LandingContainer = () => {
   const [dev, setDev] = useState<z.infer<typeof userSchema>[]>([]);
 
   const handler = async (e: z.infer<typeof githubUser>) => {
-    setComponent(await streamComponent(e.username));
+    setComponent(await streamComponent(e.username, e.developer));
     setView(!view);
   };
 
@@ -137,6 +153,7 @@ export const LandingContainer = () => {
                       <FormField
                         control={form.control}
                         name="username"
+                        rules={{ required: "Username is required" }}
                         render={({ field }) => (
                           <FormItem>
                             <div className="transition-all flex items-center space-x-2 bg-gray-100 rounded-full p-2 transition-all duration-300 hover:bg-gray-200 focus-within:ring-2 focus-within:ring-purple-400">
@@ -157,7 +174,6 @@ export const LandingContainer = () => {
                                 Send{" "}
                                 <ArrowRightIcon className="transition-all ml-2 h-4 w-4" />
                               </ShimmerButton>
-
                               <DropdownMenu>
                                 <div className="transition-all  text-white rounded-full px-6 py-2 hover:bg-primary/20 duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400/20">
                                   <DropdownMenuTrigger asChild>
@@ -175,15 +191,39 @@ export const LandingContainer = () => {
                                   </DropdownMenuTrigger>
 
                                   <DropdownMenuContent>
-                                    <DropdownMenuItem>
-                                      Software Developers
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                      Design Developers
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                      Data Analyst
-                                    </DropdownMenuItem>
+                                    <FormField
+                                      control={form.control}
+                                      name="developer"
+                                      render={({ field }) => (
+                                        <div>
+                                          <FormItem>
+                                            <FormLabel>
+                                              Pedido feito pelo:
+                                            </FormLabel>
+                                            <FormControl>
+                                              <MultipleSelector
+                                                value={field.value}
+                                                onChange={field.onChange}
+                                                defaultOptions={OPTIONS}
+                                                maxSelected={1}
+                                                onMaxSelected={() =>
+                                                  alert(
+                                                    "Voçe só pode adicionar um."
+                                                  )
+                                                }
+                                                placeholder="Selecione o provedor de pedido..."
+                                                emptyIndicator={
+                                                  <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                                                    Sem mais resultados
+                                                  </p>
+                                                }
+                                              />
+                                            </FormControl>
+                                            <FormMessage />
+                                          </FormItem>
+                                        </div>
+                                      )}
+                                    />
                                   </DropdownMenuContent>
                                 </div>
                               </DropdownMenu>
@@ -191,6 +231,7 @@ export const LandingContainer = () => {
                           </FormItem>
                         )}
                       />
+
                       {/* <p className="transition-all text-sm font-bold drop-shadow-md text-red-800 text-center">
                   lorem ipsum lorem ipsum lorem ipsum
                 </p> */}
