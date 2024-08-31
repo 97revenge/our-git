@@ -39,7 +39,6 @@ import {
   FormMessage,
 } from "./ui/form";
 import { LandingProfileSkeleton } from "./Skeletons/LandingProfileSkeleton";
-import { content } from "@/actions/content";
 import MultipleSelector, { Option } from "./multiple-selector";
 
 const optionSchema = z.object({
@@ -60,16 +59,16 @@ const githubUser = z.object({
   username: z
     .string()
     .min(5, { message: "Minimum of characters is 5" })
-    .max(35, { message: "Maximum of characters is 35" })
-    .refine(
-      async (val) => {
-        const response = await fetch(`https://api.github.com/users/${val}`);
-        return response.ok && response.status === 200;
-      },
-      {
-        message: "This user does not exist on GitHub",
-      }
-    ),
+    .max(35, { message: "Maximum of characters is 35" }),
+  // .refine(
+  //   async (val) => {
+  //     const response = await fetch(`https://api.github.com/users/${val}`);
+  //     return response.ok && response.status === 200;
+  //   },
+  //   {
+  //     message: "This user does not exist on GitHub",
+  //   }
+  // ),
   developer: z.array(optionSchema).min(1),
 });
 
@@ -79,8 +78,6 @@ export const LandingContainer = () => {
   const [component, setComponent] = useState<React.ReactNode>();
 
   const [view, setView] = useState<boolean>(false);
-
-  const [input, setInput] = useState<any>("");
 
   const [dev, setDev] = useState<z.infer<typeof userSchema>[]>([]);
 
@@ -254,7 +251,7 @@ export const LandingContainer = () => {
                       {form.formState.errors.username && (
                         <>
                           <div className="w-full flex items-center justify-center ">
-                            <p className="fixed py-2 transition-all text-sm font-bold drop-shadow-md text-red-800 text-center">
+                            <p className=" py-2 transition-all text-sm font-bold drop-shadow-md text-red-800 text-center">
                               Your username requires be valid ...
                             </p>
                           </div>

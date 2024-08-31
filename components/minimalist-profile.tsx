@@ -28,7 +28,7 @@ import {
 import { z } from "zod";
 import { ChartComponent } from "./Chats/ChartComponent";
 import { NoteComponent } from "./Chats/NoteComponent";
-import { StatisticCard } from "./statistic-card";
+import { StatisticCard, StatItem } from "./statistic-card";
 
 const userSchema = z
   .object({
@@ -88,15 +88,21 @@ const mockUser: Partial<User | any> = {
   tier_id: "gold",
 };
 
+import { NeonGradientCard } from "@/components/magicui/neon-gradient-card";
+
 export const MinimalistProfile = ({ ...props }) => {
   return (
     <>
-      <TooltipProvider>
-        <div className="transition-all w-full h-full flex items-center  flex-col justify-center pb-4   ">
-          <div className="w-full h-full p-4 flex flex-col md:flex-row items-center justify-center gap-2  ">
+      <div className="w-full flex items-center justify-center  py-4 ">
+        <NeonGradientCard className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <NoteComponent />
             <ChartComponent />
           </div>
+        </NeonGradientCard>
+      </div>
+      <TooltipProvider>
+        <div className="transition-all w-full h-full flex items-center  flex-col justify-center pb-4   ">
           <Card className="w-full max-w-3xl shadow-md hover:shadow-xl">
             <CardContent className="p-6">
               <div className="mt-8">

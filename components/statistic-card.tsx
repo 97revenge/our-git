@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowRightIcon, Moon, Sun, SkipBackIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ShimmerButton from "./magicui/shimmer-button";
+import { NeonGradientCard } from "./magicui/neon-gradient-card";
 
 export const StatisticCard = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -12,7 +13,7 @@ export const StatisticCard = () => {
 
   return (
     <>
-      <div className="w-full max-w-3xl p-6 bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200">
+      <NeonGradientCard className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <StatItem value="1,282+" description="creators using Typeframes" />
           <StatItem
@@ -40,18 +41,18 @@ export const StatisticCard = () => {
             </div>
           </div>
         </div>
-      </div>
+      </NeonGradientCard>
     </>
   );
 };
 
-function StatItem({
+export const StatItem = ({
   value,
   description,
 }: {
   value: string;
   description: string;
-}) {
+}) => {
   return (
     <div className="flex flex-col items-center justify-center text-center p-4 border-r border-gray-200 dark:border-gray-700 last:border-r-0">
       <span className="text-4xl font-bold white:text-black dark:white mb-2">
@@ -60,4 +61,4 @@ function StatItem({
       <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>
     </div>
   );
-}
+};

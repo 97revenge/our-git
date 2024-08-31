@@ -59,6 +59,10 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        "background-position-spin": {
+          "0%": { backgroundPosition: "top center" },
+          "100%": { backgroundPosition: "bottom center" },
+        },
         "spin-around": {
           "0%": {
             transform: "translateZ(0) rotate(0)",
@@ -98,6 +102,9 @@ const config = {
         },
       },
       animation: {
+
+        backgroundPositionSpin:
+          "background-position-spin 3000ms infinite alternate",
         "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
         slide: "slide var(--speed) ease-in-out infinite alternate",
         gradient: "gradient 8s linear infinite",
