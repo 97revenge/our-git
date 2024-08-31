@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 export const FadeUp = ({
   stagger,
   children,
+  ...props
 }: {
   children: React.ReactNode;
   stagger: number;
@@ -25,7 +26,10 @@ export const FadeUp = ({
         },
       }}
     >
-      <motion.div variants={FADE_UP_ANIMATION_VARIANTS}> {children}</motion.div>
+      <motion.div {...props} variants={FADE_UP_ANIMATION_VARIANTS}>
+        {" "}
+        {children}
+      </motion.div>
     </motion.div>
   );
 };

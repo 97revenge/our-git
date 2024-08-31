@@ -89,18 +89,24 @@ const mockUser: Partial<User | any> = {
 };
 
 import { NeonGradientCard } from "@/components/magicui/neon-gradient-card";
+import { FadeUp } from "./motion-variants/fade-up";
 
 export const MinimalistProfile = ({ ...props }) => {
   return (
     <>
-      <div className="w-full flex items-center justify-center  py-4 ">
-        <NeonGradientCard className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <NoteComponent />
-            <ChartComponent />
+      <div className="w-full flex items-center justify-center pb-6  ">
+        <FadeUp stagger={0.15}>
+          <div className="  w-screen flex items-center justify-center">
+            <NeonGradientCard className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <NoteComponent />
+                <ChartComponent />
+              </div>
+            </NeonGradientCard>
           </div>
-        </NeonGradientCard>
+        </FadeUp>
       </div>
+
       <TooltipProvider>
         <div className="transition-all w-full h-full flex items-center  flex-col justify-center pb-4   ">
           <Card className="w-full max-w-3xl shadow-md hover:shadow-xl">
