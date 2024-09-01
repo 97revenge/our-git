@@ -1,7 +1,7 @@
 "use server";
 
 export const chart = () => {
-  const chartData = [
+  const chartData: { [index: string]: string | any } = [
     { browser: "chrome", visitors: 187, fill: "var(--color-chrome)" },
     { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
     { browser: "firefox", visitors: 275, fill: "var(--color-firefox)" },

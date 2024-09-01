@@ -91,7 +91,13 @@ export const repoSchema = z.object({
   archived: z.boolean().optional(),
   disabled: z.boolean().optional(),
   open_issues_count: z.number().optional(),
-  license: z.string().nullable().optional(),
+  license: z.object({
+    key: z.string(),
+    name: z.string(),
+    spdx_id: z.string().nullable(),
+    url: z.string().nullable(),
+    node_id: z.string(),
+  }).nullable().optional(),
   allow_forking: z.boolean().optional(),
   is_template: z.boolean().optional(),
   web_commit_signoff_required: z.boolean().optional(),
@@ -101,4 +107,5 @@ export const repoSchema = z.object({
   open_issues: z.number().optional(),
   watchers: z.number().optional(),
   default_branch: z.string().optional(),
+
 });

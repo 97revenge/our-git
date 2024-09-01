@@ -17,39 +17,34 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { chart } from "@/actions/chart";
 import { ChartSkeleton } from "../Skeletons/ChartSkeleton";
 import { Badge } from "../ui/badge";
+import { content } from "@/actions/content";
 
-const chartConfig = {
-  visitors: {
-    label: "Lines of code: ",
+export const chartConfig = {
+  lines: {
+    label: "Lines of code",
   },
-  chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
+  Typescript: {
+    label: "TS",
+    color: "hsl(#2e707a)",
   },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
+  Javascript: {
+    label: "JS",
+    color: "hsl(#b283c8)",
   },
-  firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
+  CSS: {
+    label: "CSS",
+    color: "hsl(#b283c8)",
   },
 } satisfies ChartConfig;
 
-export const ChartComponent = () => {
-  const [instance, setInstance] = useState<Array<any>>([]);
+export const ChartComponent = ({ children }: { children: React.ReactNode }) => {
+  const [instance, setInstance] = useState<{ [index: string]: string | any }>(
+    []
+  );
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
@@ -78,43 +73,7 @@ export const ChartComponent = () => {
               <Badge variant={"default"}>Last updated - June 2024</Badge>{" "}
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <ChartContainer config={chartConfig}>
-              <BarChart accessibilityLayer data={instance}>
-                <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey="browser"
-                  tickLine={false}
-                  tickMargin={10}
-                  axisLine={false}
-                  tickFormatter={(value) =>
-                    chartConfig[value as keyof typeof chartConfig]?.label
-                  }
-                />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent hideLabel />}
-                />
-                <Bar
-                  dataKey="visitors"
-                  strokeWidth={2}
-                  radius={8}
-                  activeIndex={2}
-                  activeBar={({ ...props }) => {
-                    return (
-                      <Rectangle
-                        {...props}
-                        fillOpacity={0.8}
-                        stroke={props.payload.fill}
-                        strokeDasharray={4}
-                        strokeDashoffset={4}
-                      />
-                    );
-                  }}
-                />
-              </BarChart>
-            </ChartContainer>
-          </CardContent>
+          <CardContent>{children}</CardContent>
         </Card>
 
         <div className="space-y-2 ">

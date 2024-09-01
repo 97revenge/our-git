@@ -40,6 +40,13 @@ import {
 } from "./ui/form";
 import { LandingProfileSkeleton } from "./Skeletons/LandingProfileSkeleton";
 import MultipleSelector, { Option } from "./multiple-selector";
+import { NoteComponent } from "./Chats/NoteComponent";
+import { ChartComponent, chartConfig } from "./Chats/ChartComponent";
+import { chart } from "@/actions/chart";
+
+import { Bar, BarChart, CartesianGrid, Rectangle, XAxis } from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart";
+import { content } from "@/actions/content";
 
 const optionSchema = z.object({
   label: z.string(),
@@ -81,9 +88,29 @@ export const LandingContainer = () => {
 
   const [dev, setDev] = useState<z.infer<typeof userSchema>[]>([]);
 
+  const [instance, setInstance] = useState<{ [index: string]: string | any }>(
+    []
+  );
+
+  const [graphChart, setGraphChart] = useState<{
+    [index: string]: string | any;
+  }>([]);
+
   const handler = async (e: z.infer<typeof githubUser>) => {
-    setComponent(await streamComponent(e.username, e.developer));
-    setView(!view);
+    try {
+      setComponent(await streamComponent(e.username, e.developer));
+      const { chartData } = await chart();
+      const { treatmentData } = await content(e.username);
+
+      setGraphChart(treatmentData?.code as any[]);
+      setView(!view);
+    } catch (err) {
+      if (err instanceof Error) {
+        alert(JSON.stringify(err.message));
+        alert(JSON.stringify(err.cause));
+        setView(false);
+      }
+    }
   };
 
   const [darkMode, setDarkMode] = useState(false);
@@ -382,22 +409,47 @@ export const LandingContainer = () => {
           ) : (
             <>
               <MinimalistProfile>
-                <div className=" grid grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-2 rounded-xl bg-gray-500/10 shadow-xl w-full flex items-start justify-center ">
-                  {component ? (
-                    component
-                  ) : (
-                    <p className="transition-all text-gray-500 text-center transition-all duration-300 hover:text-gray-700">
-                      Your response will appear here
-                    </p>
-                  )}
-                  {component ? (
-                    component
-                  ) : (
-                    <p className="transition-all text-gray-500 text-center transition-all duration-300 hover:text-gray-700">
-                      Your response will appear here
-                    </p>
-                  )}
-                </div>
+                <NoteComponent />
+                <ChartComponent>
+                  <ChartContainer config={chartConfig}>
+                    <BarChart
+                      accessibilityLayer
+                      data={graphChart as Array<typeof chartConfig>}
+                    >
+                      <CartesianGrid vertical={true} />
+                      <XAxis
+                        dataKey="language"
+                        tickLine={true}
+                        tickMargin={10}
+                        axisLine={true}
+                        tickFormatter={(value) =>
+                          chartConfig[value as keyof typeof chartConfig]?.label
+                        }
+                      />
+                      <ChartTooltip
+                        cursor={true}
+                        content={<ChartTooltipContent hideLabel />}
+                      />
+                      <Bar
+                        dataKey="lines"
+                        strokeWidth={2}
+                        radius={8}
+                        activeIndex={2}
+                        activeBar={({ ...props }) => {
+                          return (
+                            <Rectangle
+                              {...props}
+                              fillOpacity={0.8}
+                              stroke={props.payload.fill}
+                              strokeDasharray={4}
+                              strokeDashoffset={4}
+                            />
+                          );
+                        }}
+                      />
+                    </BarChart>
+                  </ChartContainer>
+                </ChartComponent>
               </MinimalistProfile>
 
               <div className=" w-full flex items-center justify-center relative bottom-4">

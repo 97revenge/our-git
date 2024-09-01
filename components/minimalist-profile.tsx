@@ -98,10 +98,10 @@ export const MinimalistProfile = ({ ...props }) => {
         <FadeUp stagger={0.15}>
           <div className="  w-screen flex items-center justify-center">
             <NeonGradientCard className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <NoteComponent />
-                <ChartComponent />
-              </div>
+              <div
+                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                {...props}
+              ></div>
             </NeonGradientCard>
           </div>
         </FadeUp>
