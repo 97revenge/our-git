@@ -33,12 +33,13 @@ export const content = async (username: string) => {
     repoSchema.parse(repo)
   );
 
-  let treatmentData: { [index: string]: Array<any> } = {
+  let treatmentData: { [index: string]: any[] } = {
     description: userRepos.map((item) => item.description),
     name: userRepos.map((item) => item.name),
     code: [],
   };
 
+  // Fetch language data for each repository
   const codeData = await Promise.all(
     treatmentData.name.map(async (repoName) => {
       const response = await fetch(
@@ -58,9 +59,22 @@ export const content = async (username: string) => {
     })
   );
 
-  treatmentData.code = codeData;
+  // Combine all language data into a single array of objects
+  const languageMap = codeData.reduce((acc, curr) => {
+    for (const [language, value] of Object.entries(curr)) {
+      if (acc[language]) {
+        acc[language] += value;
+      } else {
+        acc[language] = value;
+      }
+    }
+    return acc;
+  }, {} as { [language: string]: number });
 
-  console.log(treatmentData.code);
+  // Convert the combined language data into an array of objects
+  treatmentData.code = Object.entries(languageMap).map(([language, value]) => ({
+    [language]: value,
+  }));
 
   return {
     treatmentData,

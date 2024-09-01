@@ -44,9 +44,17 @@ import { NoteComponent } from "./Chats/NoteComponent";
 import { ChartComponent, chartConfig } from "./Chats/ChartComponent";
 import { chart } from "@/actions/chart";
 
-import { Bar, BarChart, CartesianGrid, Rectangle, XAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Rectangle,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart";
 import { content } from "@/actions/content";
+import { GitHubLanguageChart } from "./language-bar-chart";
 
 const optionSchema = z.object({
   label: z.string(),
@@ -103,6 +111,7 @@ export const LandingContainer = () => {
       const { treatmentData } = await content(e.username);
 
       setGraphChart(treatmentData?.code as any[]);
+      console.log(JSON.stringify(treatmentData?.code));
       setView(!view);
     } catch (err) {
       if (err instanceof Error) {
@@ -410,46 +419,7 @@ export const LandingContainer = () => {
             <>
               <MinimalistProfile>
                 <NoteComponent />
-                <ChartComponent>
-                  <ChartContainer config={chartConfig}>
-                    <BarChart
-                      accessibilityLayer
-                      data={graphChart as Array<typeof chartConfig>}
-                    >
-                      <CartesianGrid vertical={true} />
-                      <XAxis
-                        dataKey="language"
-                        tickLine={true}
-                        tickMargin={10}
-                        axisLine={true}
-                        tickFormatter={(value) =>
-                          chartConfig[value as keyof typeof chartConfig]?.label
-                        }
-                      />
-                      <ChartTooltip
-                        cursor={true}
-                        content={<ChartTooltipContent hideLabel />}
-                      />
-                      <Bar
-                        dataKey="lines"
-                        strokeWidth={2}
-                        radius={8}
-                        activeIndex={2}
-                        activeBar={({ ...props }) => {
-                          return (
-                            <Rectangle
-                              {...props}
-                              fillOpacity={0.8}
-                              stroke={props.payload.fill}
-                              strokeDasharray={4}
-                              strokeDashoffset={4}
-                            />
-                          );
-                        }}
-                      />
-                    </BarChart>
-                  </ChartContainer>
-                </ChartComponent>
+                <GitHubLanguageChart content={graphChart as any[]} />
               </MinimalistProfile>
 
               <div className=" w-full flex items-center justify-center relative bottom-4">
