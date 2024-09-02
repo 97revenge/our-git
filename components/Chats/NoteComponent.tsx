@@ -22,6 +22,8 @@ import { Badge } from "../ui/badge";
 import { GraphNoteSkeleton } from "../Skeletons/GraphNoteSkeleton";
 import { useEffect, useState, useTransition } from "react";
 import { chart } from "@/actions/chart";
+import { content } from "@/actions/content";
+import type { InstanceNote } from "@/lib";
 
 const chartConfig = {
   note: {
@@ -32,15 +34,20 @@ const chartConfig = {
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
+
 // posso pedir para AI analisar todo o contexto inserido e entregar uma nota de 0 a 1000 coisa do tipo ...
-export const NoteComponent = () => {
-  const [instance, setInstance] = useState<Array<any>>([]);
+export const NoteComponent = ({ note }: { note: any }) => {
+  let chartNoteData = [
+    { browser: "safari", note: note, fill: "var(--color-safari)" },
+  ];
+
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     startTransition(async () => {
       const { chartNoteData } = await chart();
-      setInstance(chartNoteData);
+
+      // setInstance(chartNoteData);
     });
   }, []);
 
@@ -67,7 +74,9 @@ export const NoteComponent = () => {
             className="mx-auto aspect-square max-h-[250px]"
           >
             <RadialBarChart
-              data={instance}
+              data={[
+                { browser: "safari", note: note, fill: "var(--color-safari)" },
+              ]}
               startAngle={0}
               endAngle={250}
               innerRadius={80}
@@ -97,7 +106,13 @@ export const NoteComponent = () => {
                             y={viewBox.cy}
                             className="fill-foreground text-4xl font-bold"
                           >
-                            {instance[0].note.toLocaleString()}
+                            {[
+                              {
+                                browser: "safari",
+                                note: note,
+                                fill: "var(--color-safari)",
+                              },
+                            ][0].note.toLocaleString()}
                           </tspan>
                           <tspan
                             x={viewBox.cx}

@@ -17,7 +17,7 @@ import { ProfileCardSkeleton } from "@/components/Skeletons/ProfileSkeleton";
 
 let textContext: string;
 
-const model = createGoogleGenerativeAI({
+export const model = createGoogleGenerativeAI({
   apiKey: process.env.API_GEMINI_KEY!,
 });
 

@@ -99,7 +99,7 @@ export const MinimalistProfile = ({ ...props }) => {
           <div className="  w-screen flex items-center justify-center">
             <NeonGradientCard className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200">
               <div
-                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                className="flex flex-col space-y-2 items-center justify-center"
                 {...props}
               ></div>
             </NeonGradientCard>

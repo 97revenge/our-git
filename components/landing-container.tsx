@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
+
+import { GraphChart } from "@/lib/index";
 import { streamComponent } from "@/actions/user";
 import { ArrowRightIcon, Github, Globe, Twitter } from "lucide-react";
 import AnimatedBeam from "./animata/animated-beam";
@@ -15,7 +17,6 @@ import ShimmerButton from "./magicui/shimmer-button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import {
@@ -32,7 +33,6 @@ import { MinimalistProfile } from "./minimalist-profile";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -41,18 +41,8 @@ import {
 import { LandingProfileSkeleton } from "./Skeletons/LandingProfileSkeleton";
 import MultipleSelector, { Option } from "./multiple-selector";
 import { NoteComponent } from "./Chats/NoteComponent";
-import { ChartComponent, chartConfig } from "./Chats/ChartComponent";
 import { chart } from "@/actions/chart";
 
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Rectangle,
-  XAxis,
-  YAxis,
-} from "recharts";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart";
 import { content } from "@/actions/content";
 import { GitHubLanguageChart } from "./language-bar-chart";
 
@@ -74,16 +64,16 @@ const githubUser = z.object({
   username: z
     .string()
     .min(5, { message: "Minimum of characters is 5" })
-    .max(35, { message: "Maximum of characters is 35" }),
-  // .refine(
-  //   async (val) => {
-  //     const response = await fetch(`https://api.github.com/users/${val}`);
-  //     return response.ok && response.status === 200;
-  //   },
-  //   {
-  //     message: "This user does not exist on GitHub",
-  //   }
-  // ),
+    .max(35, { message: "Maximum of characters is 35" })
+    .refine(
+      async (val) => {
+        const response = await fetch(`https://api.github.com/users/${val}`);
+        return response.ok && response.status === 200;
+      },
+      {
+        message: "This user does not exist on GitHub",
+      }
+    ),
   developer: z.array(optionSchema).min(1),
 });
 
@@ -96,22 +86,25 @@ export const LandingContainer = () => {
 
   const [dev, setDev] = useState<z.infer<typeof userSchema>[]>([]);
 
+  const [note, setNote] = useState<any>("");
+
   const [instance, setInstance] = useState<{ [index: string]: string | any }>(
     []
   );
 
-  const [graphChart, setGraphChart] = useState<{
-    [index: string]: string | any;
-  }>([]);
+  const [graphChart, setGraphChart] = useState<GraphChart<string | number>[]>(
+    []
+  );
 
   const handler = async (e: z.infer<typeof githubUser>) => {
     try {
       setComponent(await streamComponent(e.username, e.developer));
       const { chartData } = await chart();
-      const { treatmentData } = await content(e.username);
+      const { treatmentData, treatMentNoteData } = await content(e.username);
 
       setGraphChart(treatmentData?.code as any[]);
-      console.log(JSON.stringify(treatmentData?.code));
+      setNote(treatMentNoteData);
+      alert(note);
       setView(!view);
     } catch (err) {
       if (err instanceof Error) {
@@ -158,39 +151,39 @@ export const LandingContainer = () => {
       {/* Header */}
       {/* Main Content */}
 
-      <AnimatedBeam className="transition-all h-full">
+      <AnimatedBeam className="transition-all transition-all h-full">
         <FadeUp stagger={0.15}>
           <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
           {view === false ? (
             <>
-              <main className="transition-all flex-grow flex flex-col items-center justify-start w-full h-full   ">
-                <div className="transition-all w-full  ">
+              <main className="transition-all transition-all flex-grow flex flex-col items-center justify-start w-full h-full   ">
+                <div className="transition-all transition-all w-full  ">
                   <div
-                    className="transition-all  flex flex-col
+                    className="transition-all transition-all  flex flex-col
                   items-center justify-center w-full "
                   >
-                    <h1 className="transition-all bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance sm:text-6xl md:text-7xl lg:text-8xl   ">
+                    <h1 className="transition-all transition-all bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance sm:text-6xl md:text-7xl lg:text-8xl   ">
                       Enchance your{" "}
-                      <u className="transition-all bg-gradient-to-br dark:from-white from-pink-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
+                      <u className="transition-all transition-all bg-gradient-to-br dark:from-white from-pink-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
                         bio
                       </u>
                       <br />
                       With{" "}
-                      <u className="transition-all bg-gradient-to-br dark:from-white from-blue-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
+                      <u className="transition-all transition-all bg-gradient-to-br dark:from-white from-blue-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
                         AI
                       </u>{" "}
                       and{" "}
-                      <u className="transition-all bg-gradient-to-br dark:from-white from-gray-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
+                      <u className="transition-all transition-all bg-gradient-to-br dark:from-white from-gray-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
                         Github
                       </u>
                     </h1>
                   </div>
                 </div>
-                <div className="transition-all w-full  mt-2  flex flex-col space-y-2 items-center justify-center p-6">
+                <div className="transition-all transition-all w-full  mt-2  flex flex-col space-y-2 items-center justify-center p-6">
                   <Form {...form}>
                     <form
                       onSubmit={form.handleSubmit(handler)}
-                      className="transition-all space-y-4 w-auto  "
+                      className="transition-all transition-all space-y-4 w-auto  "
                     >
                       <FormField
                         control={form.control}
@@ -198,7 +191,7 @@ export const LandingContainer = () => {
                         rules={{ required: "Username is required" }}
                         render={({ field }) => (
                           <FormItem>
-                            <div className="transition-all flex items-center space-x-2 bg-gray-100 rounded-full p-2 transition-all duration-300 hover:bg-gray-200 focus-within:ring-2 focus-within:ring-purple-400">
+                            <div className="transition-all transition-all flex items-center space-x-2 bg-gray-100 rounded-full p-2 transition-all duration-300 hover:bg-gray-200 focus-within:ring-2 focus-within:ring-purple-400">
                               <FormControl>
                                 <input
                                   // value={input}
@@ -206,18 +199,18 @@ export const LandingContainer = () => {
                                   {...field}
                                   type="text"
                                   placeholder="Drop your github username ..."
-                                  className="transition-all hover:shadow-xl flex-grow bg-transparent outline-none text-primary placeholder-gray-500 px-4 py-2 rounded-full"
+                                  className="transition-all transition-all hover:shadow-xl flex-grow bg-transparent outline-none text-primary placeholder-gray-500 px-4 py-2 rounded-full"
                                 />
                               </FormControl>
                               <ShimmerButton
                                 type="submit"
-                                className="transition-all  text-white rounded-full px-6 py-2 hover:bg-primary duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                                className="transition-all transition-all  text-white rounded-full px-6 py-2 hover:bg-primary duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400"
                               >
-                                Send{" "}
-                                <ArrowRightIcon className="transition-all ml-2 h-4 w-4" />
+                                Send
+                                <ArrowRightIcon className="transition-all transition-all ml-2 h-4 w-4" />
                               </ShimmerButton>
                               <DropdownMenu>
-                                <div className="transition-all  text-white rounded-full px-6 py-2 hover:bg-primary/20 duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400/20">
+                                <div className="transition-all transition-all  text-white rounded-full px-6 py-2 hover:bg-primary/20 duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400/20">
                                   <DropdownMenuTrigger asChild>
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
@@ -236,19 +229,19 @@ export const LandingContainer = () => {
                                             ? "#f60002"
                                             : "#295dff"
                                         }
-                                        className="transition-all"
+                                        className="transition-all transition-all"
                                         d="M17 21.025q-.2 0-.4-.05t-.375-.175l-3-1.75q-.35-.2-.537-.537t-.188-.738V14.25q0-.4.188-.737t.537-.538l3-1.75q.175-.125.375-.175T17 11t.388.063t.362.162l3 1.75q.35.2.55.538t.2.737v3.525q0 .4-.2.738t-.55.537l-3 1.75q-.175.1-.363.163t-.387.062M10 12q-1.65 0-2.825-1.175T6 8t1.175-2.825T10 4t2.825 1.175T14 8t-1.175 2.825T10 12m-8 8v-2.8q0-.825.425-1.55t1.175-1.1q1.275-.65 2.875-1.1T10 13h.35q.15 0 .3.05q-.2.45-.337.938T10.1 15H10q-1.775 0-3.187.45t-2.313.9q-.225.125-.363.35T4 17.2v.8h6.3q.15.525.4 1.038t.55.962zm8-10q.825 0 1.413-.587T12 8t-.587-1.412T10 6t-1.412.588T8 8t.588 1.413T10 10m4.65 3.85L17 15.225l2.35-1.375L17 12.5zm3.1 5.2l2.25-1.3V15l-2.25 1.325zM14 17.75l2.25 1.325V16.35L14 15.025z"
                                       />
                                     </svg>
                                   </DropdownMenuTrigger>
 
-                                  <DropdownMenuContent className="transition-all w-full  p-2 rounded-xl h-[250px]">
+                                  <DropdownMenuContent className="transition-all transition-all w-full  p-2 rounded-xl h-[250px]">
                                     <FormField
                                       control={form.control}
                                       name="developer"
                                       render={({ field }) => (
-                                        <div className="">
-                                          <FormItem className=" p-2">
+                                        <div className="transition-all ">
+                                          <FormItem className="transition-all  p-2">
                                             <FormLabel>
                                               Choose your role
                                             </FormLabel>
@@ -265,7 +258,7 @@ export const LandingContainer = () => {
                                                 }
                                                 placeholder="Select your role..."
                                                 emptyIndicator={
-                                                  <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                                                  <p className="transition-all text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
                                                     no more results...
                                                   </p>
                                                 }
@@ -286,8 +279,8 @@ export const LandingContainer = () => {
 
                       {form.formState.errors.username && (
                         <>
-                          <div className="w-full flex items-center justify-center ">
-                            <p className=" py-2 transition-all text-sm font-bold drop-shadow-md text-red-800 text-center">
+                          <div className="transition-all w-full flex items-center justify-center ">
+                            <p className="transition-all  py-2 transition-all text-sm font-bold drop-shadow-md text-red-800 text-center">
                               Your username requires be valid ...
                             </p>
                           </div>
@@ -297,12 +290,12 @@ export const LandingContainer = () => {
                   </Form>
                 </div>
 
-                <div className="transition-all  w-full max-w-3xl p-4 ">
-                  <h2 className="transition-all text-lg font-semibold mb-4">
+                <div className="transition-all transition-all  w-full max-w-3xl p-4 ">
+                  <h2 className="transition-all transition-all text-lg font-semibold mb-4">
                     Popular Developers
                   </h2>
-                  <ScrollArea className="h-[500px] w-full px-auto flex items-center justify-center ">
-                    <div className=" transition-all grid grid-cols-1 grid-flow-row sm:grid-cols-2    md:grid-cols-2 w-full  gap-4   ">
+                  <ScrollArea className="transition-all h-[500px] w-full px-auto flex items-center justify-center ">
+                    <div className="transition-all  transition-all grid grid-cols-1 grid-flow-row sm:grid-cols-2    md:grid-cols-2 w-full  gap-4   ">
                       {isPending ? (
                         <>
                           <LandingProfileSkeleton />
@@ -324,31 +317,31 @@ export const LandingContainer = () => {
                                 <>
                                   <EnchancedProfileCard>
                                     <Link href={`/test?user=${item?.login}`}>
-                                      <article className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-colors duration-300 max-h-full ">
-                                        <div className="p-4">
-                                          <div className="flex items-center space-x-2 mb-2">
+                                      <article className="transition-all bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-colors duration-300 max-h-full ">
+                                        <div className="transition-all p-4">
+                                          <div className="transition-all flex items-center space-x-2 mb-2">
                                             <Image
                                               alt="Claire Mac"
                                               src={`${item?.avatar_url}`}
                                               quality={100}
-                                              className="w-16  h-16 rounded-full object-full"
+                                              className="transition-all w-16  h-16 rounded-full object-full"
                                               width={106}
                                               height={16}
                                             />
                                             <div>
-                                              <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                                              <h1 className="transition-all text-xl font-semibold text-gray-800 dark:text-gray-100">
                                                 {item?.login}
                                               </h1>
                                               <Badge
                                                 variant={"secondary"}
-                                                className="text-sm text-primary dark:text-secondary"
+                                                className="transition-all text-sm text-primary dark:text-secondary"
                                               >
                                                 <svg
                                                   xmlns="http://www.w3.org/2000/svg"
                                                   width="16"
                                                   height="16"
                                                   viewBox="0 0 24 24"
-                                                  className="mr-1 bg-white rounded-full"
+                                                  className="transition-all mr-1 bg-white rounded-full"
                                                 >
                                                   <path
                                                     fill="#cf83a4"
@@ -357,7 +350,7 @@ export const LandingContainer = () => {
                                                 </svg>{" "}
                                                 {item?.location && (
                                                   <>
-                                                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                                                    <p className="transition-all text-sm text-gray-600 dark:text-gray-300">
                                                       {item?.location}
                                                     </p>
                                                   </>
@@ -365,12 +358,12 @@ export const LandingContainer = () => {
                                               </Badge>
                                             </div>
                                           </div>
-                                          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                                          <p className="transition-all text-sm text-gray-600 dark:text-gray-300 mb-4">
                                             {item?.bio}
                                           </p>
-                                          <div className="flex justify-start space-x-4">
+                                          <div className="transition-all flex justify-start space-x-4">
                                             <Badge
-                                              className="rounded-full"
+                                              className="transition-all rounded-full"
                                               variant={"secondary"}
                                             >
                                               <SocialLink
@@ -380,7 +373,7 @@ export const LandingContainer = () => {
                                               />
                                             </Badge>
                                             <Badge
-                                              className="rounded-full"
+                                              className="transition-all rounded-full"
                                               variant={"secondary"}
                                             >
                                               <SocialLink
@@ -390,7 +383,7 @@ export const LandingContainer = () => {
                                               />
                                             </Badge>
                                             <Badge
-                                              className="rounded-full"
+                                              className="transition-all rounded-full"
                                               variant={"secondary"}
                                             >
                                               <SocialLink
@@ -418,14 +411,18 @@ export const LandingContainer = () => {
           ) : (
             <>
               <MinimalistProfile>
-                <NoteComponent />
-                <GitHubLanguageChart content={graphChart as any[]} />
+                <NoteComponent note={Number()} />
+                <div className="transition-all grid grid-cols-2  gap-4">
+                  <GitHubLanguageChart
+                    content={graphChart as GraphChart<string | number>[]}
+                  />
+                </div>
               </MinimalistProfile>
 
-              <div className=" w-full flex items-center justify-center relative bottom-4">
+              <div className="transition-all w-full flex items-center justify-center relative bottom-4">
                 <ShimmerButton
                   type="submit"
-                  className="transition-all  text-white rounded-full px-6 py-2 hover:bg-primary duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  className="transition-all transition-all  text-white rounded-full px-6 py-2 hover:bg-primary duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400"
                   onClick={() => setView(!view)}
                 >
                   Generate Another

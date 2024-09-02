@@ -1,7 +1,4 @@
 import { useState } from "react";
-import { ArrowRightIcon, Moon, Sun, SkipBackIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import ShimmerButton from "./magicui/shimmer-button";
 import { NeonGradientCard } from "./magicui/neon-gradient-card";
 import { FadeUp } from "./motion-variants/fade-up";
 

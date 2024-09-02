@@ -2,6 +2,9 @@
 
 import z from "zod";
 import { repoSchema } from "@/lib/zod/owner";
+import { streamText } from "ai";
+import { model } from "./user";
+import { createStreamableValue } from "ai/rsc";
 
 export const content = async (username: string) => {
   const GITHUB_API_KEY = process.env.GITHUB_API_KEY;
@@ -76,7 +79,27 @@ export const content = async (username: string) => {
     [language]: value,
   }));
 
+  // generatedData
+  const { textStream } = await streamText({
+    model: model("gemini-1.5-flash-latest", {
+      safetySettings: [
+        {
+          category: "HARM_CATEGORY_HATE_SPEECH",
+          threshold: "BLOCK_LOW_AND_ABOVE",
+        },
+      ],
+    }),
+    system:
+      "You are a very accurate and professional assistant evaluator who receives various types of values ​​and gives an evaluation of great quality.",
+    prompt: `${JSON.stringify(
+      treatmentData.code
+    )} understand this matrix, it is the amount of content that a developer has coded over the years, give a score from 0 to 1000 and nothing more than that`,
+  });
+
+  const stream = createStreamableValue(textStream);
+
   return {
     treatmentData,
+    treatMentNoteData: stream.value,
   };
 };
