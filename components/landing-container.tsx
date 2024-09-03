@@ -1,9 +1,6 @@
 "use client";
-
 import { useEffect, useState, useTransition } from "react";
-
 import { GraphChart } from "@/lib/index";
-import { streamComponent } from "@/actions/user";
 import { ArrowRightIcon, Github, Globe, Twitter } from "lucide-react";
 import AnimatedBeam from "./animata/animated-beam";
 import { useForm } from "react-hook-form";
@@ -13,6 +10,8 @@ import z from "zod";
 import { userSchema } from "@/lib/zod/user";
 import Image from "next/image";
 import ShimmerButton from "./magicui/shimmer-button";
+
+import { readStreamableValue } from "ai/rsc";
 
 import {
   DropdownMenu,
@@ -88,22 +87,24 @@ export const LandingContainer = () => {
 
   const [note, setNote] = useState<any>("");
 
-  const [instance, setInstance] = useState<{ [index: string]: string | any }>(
-    []
-  );
-
   const [graphChart, setGraphChart] = useState<GraphChart<string | number>[]>(
     []
   );
 
   const handler = async (e: z.infer<typeof githubUser>) => {
     try {
-      setComponent(await streamComponent(e.username, e.developer));
+      // setComponent(await streamComponent(e.username, e.developer));s
       const { chartData } = await chart();
       const { treatmentData, treatMentNoteData } = await content(e.username);
 
       setGraphChart(treatmentData?.code as any[]);
-      setNote(treatMentNoteData);
+
+      let noteContent = "";
+      for await (const chunk of readStreamableValue(treatMentNoteData)) {
+        noteContent += chunk;
+      }
+      setNote(noteContent);
+
       alert(note);
       setView(!view);
     } catch (err) {
@@ -411,7 +412,7 @@ export const LandingContainer = () => {
           ) : (
             <>
               <MinimalistProfile>
-                <NoteComponent note={Number()} />
+                <NoteComponent value={note} />
                 <div className="transition-all grid grid-cols-2  gap-4">
                   <GitHubLanguageChart
                     content={graphChart as GraphChart<string | number>[]}

@@ -35,12 +35,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+type Props<T> = {
+  value: T;
+};
 // posso pedir para AI analisar todo o contexto inserido e entregar uma nota de 0 a 1000 coisa do tipo ...
-export const NoteComponent = ({ note }: { note: any }) => {
-  let chartNoteData = [
-    { browser: "safari", note: note, fill: "var(--color-safari)" },
-  ];
-
+export const NoteComponent = ({ value }: Props<string | any>) => {
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
@@ -75,7 +74,11 @@ export const NoteComponent = ({ note }: { note: any }) => {
           >
             <RadialBarChart
               data={[
-                { browser: "safari", note: note, fill: "var(--color-safari)" },
+                {
+                  browser: "safari",
+                  note: Number(value),
+                  fill: "var(--color-safari)",
+                },
               ]}
               startAngle={0}
               endAngle={250}
@@ -109,7 +112,7 @@ export const NoteComponent = ({ note }: { note: any }) => {
                             {[
                               {
                                 browser: "safari",
-                                note: note,
+                                note: Number(value),
                                 fill: "var(--color-safari)",
                               },
                             ][0].note.toLocaleString()}

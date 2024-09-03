@@ -2,12 +2,22 @@
 
 import z from "zod";
 import { repoSchema } from "@/lib/zod/owner";
-import { streamText } from "ai";
+import { streamText, generateText } from "ai";
 import { model } from "./user";
 import { createStreamableValue } from "ai/rsc";
 
-export const content = async (username: string) => {
+export const content = async (username: string, role?: string) => {
   const GITHUB_API_KEY = process.env.GITHUB_API_KEY;
+
+  const getPromptByRole = (value: any) => {
+    // chamada sempre no prompt
+    switch (
+      value // define o role como index
+    ) {
+      case value === 0: // valida baseado em um objeto ou assemelhação
+        return console.log("true"); // traz  o resultado
+    }
+  };
 
   if (!GITHUB_API_KEY) {
     throw new Error("GitHub API key is missing");
@@ -79,7 +89,6 @@ export const content = async (username: string) => {
     [language]: value,
   }));
 
-  // generatedData
   const { textStream } = await streamText({
     model: model("gemini-1.5-flash-latest", {
       safetySettings: [
@@ -94,12 +103,13 @@ export const content = async (username: string) => {
     prompt: `${JSON.stringify(
       treatmentData.code
     )} understand this matrix, it is the amount of content that a developer has coded over the years, give a score from 0 to 1000 and nothing more than that`,
+    maxTokens: 3,
   });
 
-  const stream = createStreamableValue(textStream);
+  const result = createStreamableValue(textStream);
 
   return {
     treatmentData,
-    treatMentNoteData: stream.value,
+    treatMentNoteData: result.value,
   };
 };
