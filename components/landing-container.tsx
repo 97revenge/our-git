@@ -52,11 +52,11 @@ const optionSchema = z.object({
 });
 
 const OPTIONS: Option[] = [
-  { label: "Front-End Developer", value: "Front-End Developer" },
-  { label: "Back-End Developer", value: "Back-End Developer" },
-  { label: "Full Stack Developer", value: "Fullstack Developer" },
-  { label: "Data Analyst", value: "Data Analyst" },
-  { label: "Designer Developer", value: "Designer Developer" },
+  { label: "Front-End Developer", value: "front" },
+  { label: "Back-End Developer", value: "back" },
+  { label: "Full Stack Developer", value: "fullstack" },
+  { label: "Data Analyst", value: "data" },
+  { label: "Designer Developer", value: "designer" },
 ];
 
 const githubUser = z.object({
@@ -95,12 +95,16 @@ export const LandingContainer = () => {
     try {
       // setComponent(await streamComponent(e.username, e.developer));s
       const { chartData } = await chart();
-      const { treatmentData, treatMentNoteData } = await content(e.username);
+      const { treatmentData, treatMentNoteData } = await content(
+        e.username,
+        e.developer as any
+      );
 
       setGraphChart(treatmentData?.code as any[]);
 
       let noteContent = "";
       for await (const chunk of readStreamableValue(treatMentNoteData)) {
+        alert(chunk);
         noteContent += chunk;
       }
       setNote(noteContent);

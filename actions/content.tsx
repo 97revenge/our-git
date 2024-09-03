@@ -2,22 +2,13 @@
 
 import z from "zod";
 import { repoSchema } from "@/lib/zod/owner";
-import { streamText, generateText } from "ai";
+import { streamText } from "ai";
 import { model } from "./user";
 import { createStreamableValue } from "ai/rsc";
+import { getPromptByRole } from "@/lib/role/getPromptByRole";
 
 export const content = async (username: string, role?: string) => {
   const GITHUB_API_KEY = process.env.GITHUB_API_KEY;
-
-  const getPromptByRole = (value: any) => {
-    // chamada sempre no prompt
-    switch (
-      value // define o role como index
-    ) {
-      case value === 0: // valida baseado em um objeto ou assemelhação
-        return console.log("true"); // traz  o resultado
-    }
-  };
 
   if (!GITHUB_API_KEY) {
     throw new Error("GitHub API key is missing");
@@ -99,11 +90,8 @@ export const content = async (username: string, role?: string) => {
       ],
     }),
     system:
-      "You are a very accurate and professional assistant evaluator who receives various types of values ​​and gives an evaluation of great quality.",
-    prompt: `${JSON.stringify(
-      treatmentData.code
-    )} understand this matrix, it is the amount of content that a developer has coded over the years, give a score from 0 to 1000 and nothing more than that`,
-    maxTokens: 3,
+      "Your answer cannot be more than 4 numbers, always keep that in mind. You are a very accurate and professional assistant evaluator who receives various types of values ​​and gives an evaluation of great quality.",
+    prompt: getPromptByRole(role as any, treatmentData.code),
   });
 
   const result = createStreamableValue(textStream);

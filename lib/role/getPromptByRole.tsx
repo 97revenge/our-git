@@ -2,21 +2,43 @@
 
 import type { StandartRoles } from "..";
 
-interface Props extends StandartRoles<string> {
-  [index: string]: string;
+interface RolePrompt {
+  prompt: string;
+  system: string;
 }
 
+interface Props extends StandartRoles<RolePrompt> {}
+
 export const getPromptByRole = (
-  role: string,
-  { topK, topP }: { topK?: string; topP?: string }
-): typeof role => {
+  role: keyof Props,
+  data: any,
+  { topK, topP }: { topK?: string; topP?: string } = {}
+): string => {
   const rolePrompts: Props = {
-    front: "You have frontistrative privileges.",
-    back: "Welcome back, back!",
-    fullstack: "Please sign up or log in.",
-    data: "This is a specific case for 'data'.",
-    design: "Superfront access granted.",
+    front: {
+      prompt:
+        "Your answer cannot be more than 4 numbers, always keep that in mind. You are a very accurate and professional assistant evaluator who receives various types of values ​​and gives an evaluation of great quality.",
+      system: `${JSON.stringify(
+        data
+      )} understand this matrix, it is the amount of content that a developer has coded over the years on github, give a score from 0 to 1000 and nothing more than that, always provide only 4 digits maximum in the answer.`,
+    },
+    back: {
+      prompt: "You have back-end privileges.",
+      system: "You have back-end privileges.",
+    },
+    fullstack: {
+      prompt: "You have full-stack privileges.",
+      system: "You have full-stack privileges.",
+    },
+    data: {
+      prompt: "You have data privileges.",
+      system: "You have data privileges.",
+    },
+    design: {
+      prompt: "You have design privileges.",
+      system: "You have design privileges.",
+    },
   };
 
-  return rolePrompts[role] || "Role not recognized.";
+  return rolePrompts[role]?.system || "Role not recognized.";
 };

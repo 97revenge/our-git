@@ -9,3 +9,16 @@ export type InstanceNote = [
     fill: string | any;
   }
 ];
+
+type RoleObject = {
+  system: string;
+  prompt: string;
+};
+
+export type StandartRoles<T> = {
+  front: T;
+  back: T;
+  fullstack: T;
+  data: T;
+  design: T;
+};
