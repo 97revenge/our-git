@@ -12,8 +12,8 @@ interface Props extends StandartRoles<RolePrompt> {}
 export const getPromptByRole = (
   role: keyof Props,
   data: any,
-  { topK, topP }: { topK?: string; topP?: string } = {}
-): string => {
+  { topK, topP }: { topK?: string; topP?: string } = {} // funcionalidade arquivada
+) => {
   const rolePrompts: Props = {
     front: {
       prompt:
@@ -40,5 +40,8 @@ export const getPromptByRole = (
     },
   };
 
-  return rolePrompts[role]?.system || "Role not recognized.";
+  return {
+    prompt: rolePrompts[role]?.prompt || "Role not recognized.",
+    system: rolePrompts[role]?.system || "Role not recognized.",
+  };
 };

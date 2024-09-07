@@ -2,7 +2,7 @@
 
 import z from "zod";
 import { repoSchema } from "@/lib/zod/owner";
-import { streamText } from "ai";
+import { streamText, CoreTool, type StreamTextResult } from "ai";
 import { model } from "./user";
 import { createStreamableValue } from "ai/rsc";
 import { getPromptByRole } from "@/lib/role/getPromptByRole";
@@ -14,9 +14,10 @@ export const content = async (username: string, role?: string) => {
     throw new Error("GitHub API key is missing");
   }
 
-  const response = await fetch(
+  const response: Response = await fetch(
     `https://api.github.com/users/${username}/repos`,
     {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${GITHUB_API_KEY}`,
       },
@@ -27,7 +28,7 @@ export const content = async (username: string, role?: string) => {
     throw new Error(`Failed to fetch repos for user ${username}`);
   }
 
-  const repos = await response.json();
+  const repos: Promise<object> = await response.json();
 
   if (!Array.isArray(repos)) {
     throw new Error("GitHub API did not return an array");
@@ -43,7 +44,6 @@ export const content = async (username: string, role?: string) => {
     code: [],
   };
 
-  // Fetch language data for each repository
   const codeData = await Promise.all(
     treatmentData.name.map(async (repoName) => {
       const response = await fetch(
@@ -89,9 +89,12 @@ export const content = async (username: string, role?: string) => {
         },
       ],
     }),
-    system:
-      "Your answer cannot be more than 4 numbers, always keep that in mind. You are a very accurate and professional assistant evaluator who receives various types of values ​​and gives an evaluation of great quality.",
-    prompt: getPromptByRole(role as any, treatmentData.code),
+    prompt:
+      "Your answer cannot be more than 3 numbers!!! always keep that in mind. You are a very accurate and professional assistant evaluator who receives various types of values ​​and gives an evaluation of great quality.",
+    system: `${JSON.stringify(
+      treatmentData
+    )} understand this matrix, it is the amount of content that a developer has coded over the years on github, give a score from 0 to 1000 and nothing more than that, always provide only 3 digits maximum in the answer.`,
+    maxTokens: 2,
   });
 
   const result = createStreamableValue(textStream);

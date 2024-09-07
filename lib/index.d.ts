@@ -17,8 +17,8 @@ type RoleObject = {
 
 export type StandartRoles<T> = {
   front: T;
-  back: T;
-  fullstack: T;
-  data: T;
-  design: T;
+  back?: T;
+  fullstack?: T;
+  data?: T;
+  design?: T;
 };
