@@ -1,23 +1,25 @@
 // Define the possible roles as a union type
 
-import type { StandartRoles } from "..";
+import type { CommunityIncharges } from "..";
 
-interface RolePrompt {
-  prompt: string;
-  system: string;
-}
-
-interface Props extends StandartRoles<RolePrompt> {}
-
-export const getPromptByRole = (
-  role: keyof Props,
-  data: any,
-  { topK, topP }: { topK?: string; topP?: string } = {} // funcionalidade arquivada
-) => {
-  const rolePrompts: Props = {
+export const getPromptByRole = (role: keyof CommunityIncharges, data: any) => {
+  const rolePrompts: Partial<CommunityIncharges> = {
     front: {
       prompt:
-        "Your answer cannot be more than 4 numbers, always keep that in mind. You are a very accurate and professional assistant evaluator who receives various types of values ​​and gives an evaluation of great quality.",
+      {
+        note:"adfjafka", 
+        summary:"dkfjfskfjskfjd",
+        insights:[{"best insight":{
+          system:"sdksgjsgk",
+          prompt:"sdkgjskgj",
+        }}], 
+        improvment:[{:{
+          system:"sdksgjsgk",
+          prompt:"sdkgjskgj",
+        }}]
+
+
+      }
       system: `${JSON.stringify(
         data
       )} understand this matrix, it is the amount of content that a developer has coded over the years on github, give a score from 0 to 1000 and nothing more than that, always provide only 4 digits maximum in the answer.`,

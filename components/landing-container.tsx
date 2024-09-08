@@ -156,7 +156,7 @@ export const LandingContainer = () => {
       {/* Header */}
       {/* Main Content */}
 
-      <AnimatedBeam className="transition-all transition-all h-full">
+      <AnimatedBeam className="transition-all transition-all h-full flex items-center justify-center">
         <FadeUp stagger={0.15}>
           <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
           {view === false ? (
@@ -417,7 +417,7 @@ export const LandingContainer = () => {
             <>
               <MinimalistProfile>
                 <NoteComponent value={note} />
-                <div className="transition-all grid grid-cols-2  gap-4">
+                <div className="flex flex-col w-full max-w-2xl">
                   <GitHubLanguageChart
                     content={graphChart as GraphChart<string | number>[]}
                   />

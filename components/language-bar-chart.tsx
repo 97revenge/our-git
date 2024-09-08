@@ -17,6 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Badge } from "./ui/badge";
 
 export const description = "A horizontal bar chart";
 
@@ -91,21 +92,34 @@ export const GitHubLanguageChart = ({ content }: { content: Array<any> }) => {
   });
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
-        <CardTitle>Bar Chart - Horizontal</CardTitle>
+        <CardTitle>lines of code</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
-      <CardContent>
-        {chartData.map((item) => {
-          return (
-            <>
-              <ul>
-                {item.language}: {item.value as React.ReactNode}
-              </ul>
-            </>
-          );
-        })}
+      <CardContent className="w-[100%] flex items-center justify-center">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+          {chartData.map((item: any) => {
+            return (
+              <>
+                <div className=" flex items-start justify-start w-auto  rounded-xl   ">
+                  <Badge variant={"outline"} className="w-auto">
+                    {item.language}
+                  </Badge>
+                  <Badge
+                    className={
+                      item.value <= 499
+                        ? "w-auto min-w-xs bg-red-500"
+                        : "w-auto min-w-xs bg-green-500 text-black "
+                    }
+                  >
+                    {item.value as React.ReactNode}
+                  </Badge>
+                </div>
+              </>
+            );
+          })}
+        </div>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">

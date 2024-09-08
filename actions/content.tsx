@@ -5,9 +5,14 @@ import { repoSchema } from "@/lib/zod/owner";
 import { streamText, CoreTool, type StreamTextResult } from "ai";
 import { model } from "./user";
 import { createStreamableValue } from "ai/rsc";
-import { getPromptByRole } from "@/lib/role/getPromptByRole";
+import type { CommunityIncharges } from "@/lib";
 
-export const content = async (username: string, role?: string) => {
+import { getPromptAndSystemByIncharge as getPromptAndSystem } from "@/lib/getStreamText/getPromptAndSystemByIncharge";
+
+export const content = async (
+  username: string,
+  role?: "front" | "back" | "fullstack" | "data" | "design"
+) => {
   const GITHUB_API_KEY = process.env.GITHUB_API_KEY;
 
   if (!GITHUB_API_KEY) {
@@ -80,6 +85,17 @@ export const content = async (username: string, role?: string) => {
     [language]: value,
   }));
 
+  const prompt = getPromptAndSystem("front", {
+    systemResource: treatmentData.code,
+  })?.note.prompt;
+
+  const system = getPromptAndSystem("front", {
+    systemResource: treatmentData.code,
+  })?.note.system;
+
+  console.log("this a prompt =>" + prompt);
+  console.log("this a system =>" + system);
+
   const { textStream } = await streamText({
     model: model("gemini-1.5-flash-latest", {
       safetySettings: [
@@ -89,12 +105,10 @@ export const content = async (username: string, role?: string) => {
         },
       ],
     }),
-    prompt:
-      "Your answer cannot be more than 3 numbers!!! always keep that in mind. You are a very accurate and professional assistant evaluator who receives various types of values ​​and gives an evaluation of great quality.",
-    system: `${JSON.stringify(
-      treatmentData
-    )} understand this matrix, it is the amount of content that a developer has coded over the years on github, give a score from 0 to 1000 and nothing more than that, always provide only 3 digits maximum in the answer.`,
+    prompt,
+    system,
     maxTokens: 2,
+    temperature: 0.8,
   });
 
   const result = createStreamableValue(textStream);
