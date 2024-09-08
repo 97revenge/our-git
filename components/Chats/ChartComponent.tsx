@@ -22,6 +22,7 @@ import { chart } from "@/actions/chart";
 import { ChartSkeleton } from "../Skeletons/ChartSkeleton";
 import { Badge } from "../ui/badge";
 import { content } from "@/actions/content";
+import { SmoothResponsiveCodeStatsSkeletonLoader as Smooth } from "../smooth-responsive-code-stats-skeleton-loader";
 
 export const chartConfig = {
   lines: {
@@ -57,7 +58,7 @@ export const ChartComponent = ({ children }: { children: React.ReactNode }) => {
   if (isPending) {
     return (
       <>
-        <ChartSkeleton />
+        <Smooth />
       </>
     );
   }
@@ -73,7 +74,9 @@ export const ChartComponent = ({ children }: { children: React.ReactNode }) => {
               <Badge variant={"default"}>Last updated - June 2024</Badge>{" "}
             </CardDescription>
           </CardHeader>
-          <CardContent>{children}</CardContent>
+          <CardContent>
+            <div className="p-4">{children}</div>
+          </CardContent>
         </Card>
 
         <div className="space-y-2 ">
