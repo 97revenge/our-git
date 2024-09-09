@@ -29,5 +29,5 @@ export const getPromptAndSystemByIncharge = (
     return inchargePrompts.front;
   }
 
-  return null; // Or handle default case
+  return null;
 };

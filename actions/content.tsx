@@ -5,8 +5,6 @@ import { repoSchema } from "@/lib/zod/owner";
 import { streamText, CoreTool, type StreamTextResult } from "ai";
 import { model } from "./user";
 import { createStreamableValue } from "ai/rsc";
-import type { CommunityIncharges } from "@/lib";
-
 import { getPromptAndSystemByIncharge as getPromptAndSystem } from "@/lib/getStreamText/getPromptAndSystemByIncharge";
 
 export const content = async (
