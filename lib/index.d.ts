@@ -10,11 +10,6 @@ export type InstanceNote = [
   }
 ];
 
-type RoleObject = {
-  system: string;
-  prompt: string;
-};
-
 type blocks<V, O> = O[{ system: T; prompt: T }];
 
 export type ScaffoldType<T> = {

@@ -91,18 +91,8 @@ export const content = async (
     systemResource: treatmentData.code,
   })?.note.system;
 
-  console.log("this a prompt =>" + prompt);
-  console.log("this a system =>" + system);
-
   const { textStream } = await streamText({
-    model: model("gemini-1.5-flash-latest", {
-      safetySettings: [
-        {
-          category: "HARM_CATEGORY_HATE_SPEECH",
-          threshold: "BLOCK_LOW_AND_ABOVE",
-        },
-      ],
-    }),
+    model: model("gemini-1.5-flash-latest"),
     prompt,
     system,
     maxTokens: 2,
