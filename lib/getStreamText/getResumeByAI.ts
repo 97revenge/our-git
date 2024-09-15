@@ -1,26 +1,23 @@
 import { model } from "@/actions/user";
 import { getPromptAndSystemByIncharge as getPromptAndSystem } from "@/lib/getStreamText/getPromptAndSystemByIncharge";
-import { streamText } from "ai";
-import { createStreamableValue } from "ai/rsc";
+import { generateText } from "ai";
 
-export const getResumeByAi = async (data: any[]) => {
+export const getResumeByAi = async (data: any[], login: string) => {
   const prompt = getPromptAndSystem("front", {
     systemResource: data,
+    login,
   })?.summary.prompt;
 
   const system = getPromptAndSystem("front", {
     systemResource: data,
   })?.summary.system;
 
-  const { textStream } = await streamText({
+  const { text } = await generateText({
     model: model("gemini-1.5-flash-latest"),
     prompt,
     system,
     temperature: 0.8,
-    maxTokens: 203,
   });
 
-  const result = createStreamableValue(textStream);
-
-  return result;
+  return text;
 };

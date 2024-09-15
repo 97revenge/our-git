@@ -3,9 +3,10 @@ import { getPromptAndSystemByIncharge as getPromptAndSystem } from "@/lib/getStr
 import { streamText } from "ai";
 import { createStreamableValue } from "ai/rsc";
 
-export const getNoteStream = async (data: any[]) => {
+export const getNoteStream = async (data: any[], login?: string) => {
   const prompt = getPromptAndSystem("front", {
     systemResource: data,
+    login,
   })?.note.prompt;
 
   const system = getPromptAndSystem("front", {
