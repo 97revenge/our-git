@@ -11,7 +11,6 @@ export type InstanceNote = [
 ];
 
 type blocks<V, O> = O[{ system: T; prompt: T }];
-
 export type ScaffoldType<T> = {
   note: T;
   summary: T;

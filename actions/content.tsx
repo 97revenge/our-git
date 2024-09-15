@@ -2,10 +2,9 @@
 
 import z from "zod";
 import { repoSchema } from "@/lib/zod/owner";
-import { streamText, CoreTool, type StreamTextResult } from "ai";
-import { model } from "./user";
-import { createStreamableValue } from "ai/rsc";
-import { getPromptAndSystemByIncharge as getPromptAndSystem } from "@/lib/getStreamText/getPromptAndSystemByIncharge";
+import { getNoteStream } from "@/lib/getStreamText/getNoteByAI";
+import { getResumeByAi } from "@/lib/getStreamText/getResumeByAI";
+import useUser from "@/lib/provider/UserProvider";
 
 export const content = async (
   username: string,
@@ -83,26 +82,12 @@ export const content = async (
     [language]: value,
   }));
 
-  const prompt = getPromptAndSystem("front", {
-    systemResource: treatmentData.code,
-  })?.note.prompt;
-
-  const system = getPromptAndSystem("front", {
-    systemResource: treatmentData.code,
-  })?.note.system;
-
-  const { textStream } = await streamText({
-    model: model("gemini-1.5-flash-latest"),
-    prompt,
-    system,
-    maxTokens: 2,
-    temperature: 0.8,
-  });
-
-  const result = createStreamableValue(textStream);
+  const result = await getNoteStream(treatmentData.code);
+  const resume = await getResumeByAi(treatmentData.code);
 
   return {
     treatmentData,
     treatMentNoteData: result.value,
+    treatmentResumeData: resume.value,
   };
 };

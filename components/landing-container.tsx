@@ -45,6 +45,13 @@ import { chart } from "@/actions/chart";
 import { content } from "@/actions/content";
 import { GitHubLanguageChart } from "./language-bar-chart";
 import { SmoothSkeletonLoader } from "./smooth-skeleton-loader";
+import { ResumeComponent } from "./ResumeComponent";
+import { InsightComponent } from "./insight-component";
+import { ImprovmentComponent } from "./improvment-component";
+import { StatisticCard } from "./statistic-card";
+import type { Metadata } from "next";
+import Markdown from "react-markdown";
+import { AiSummarySkeleton } from "./ai-summary-skeleton";
 
 const optionSchema = z.object({
   label: z.string(),
@@ -80,13 +87,13 @@ const githubUser = z.object({
 export const LandingContainer = () => {
   const [isPending, startTransition] = useTransition();
 
-  const [component, setComponent] = useState<React.ReactNode>();
-
   const [view, setView] = useState<boolean>(false);
 
   const [dev, setDev] = useState<z.infer<typeof userSchema>[]>([]);
 
   const [note, setNote] = useState<any>("");
+
+  const [resume, setResume] = useState<any>("");
 
   const [graphChart, setGraphChart] = useState<GraphChart<string | number>[]>(
     []
@@ -94,12 +101,11 @@ export const LandingContainer = () => {
 
   const handler = async (e: z.infer<typeof githubUser>) => {
     try {
+      setView(!view);
       startTransition(async () => {
         const { chartData } = await chart();
-        const { treatmentData, treatMentNoteData } = await content(
-          e.username,
-          e.developer as any
-        );
+        const { treatmentData, treatMentNoteData, treatmentResumeData } =
+          await content(e.username, e.developer as any);
         setGraphChart(treatmentData?.code as any[]);
         let noteContent = "";
         for await (const chunk of readStreamableValue(treatMentNoteData)) {
@@ -107,7 +113,11 @@ export const LandingContainer = () => {
         }
         setNote(noteContent);
 
-        setView(!view);
+        let resumeContent = "";
+        for await (const chunk of readStreamableValue(treatmentResumeData)) {
+          resumeContent += chunk;
+        }
+        setResume(resumeContent);
       });
     } catch (err) {
       if (err instanceof Error) {
@@ -429,7 +439,30 @@ export const LandingContainer = () => {
                   />
                 </div>
               </MinimalistProfile>
+              {isPending ? (
+                <>
+                  <AiSummarySkeleton />
+                </>
+              ) : (
+                <>
+                  <ResumeComponent>
+                    <Markdown>{String(`${resume}`)}</Markdown>
+                  </ResumeComponent>
+                </>
+              )}
 
+              <div className="w-full flex flex-col justify-center items-center">
+                <div className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200 px-6 pb-2 pt-1 m-2">
+                  <InsightComponent />
+                </div>
+                <div className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200 px-6 pb-2 pt-1 m-2">
+                  <ImprovmentComponent />
+                </div>
+
+                <div className="p-6 w-auto">
+                  <StatisticCard />
+                </div>
+              </div>
               <div className="transition-all w-full flex items-center justify-center relative bottom-4">
                 <ShimmerButton
                   type="submit"

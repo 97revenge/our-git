@@ -3,21 +3,21 @@ import { getPromptAndSystemByIncharge as getPromptAndSystem } from "@/lib/getStr
 import { streamText } from "ai";
 import { createStreamableValue } from "ai/rsc";
 
-export const getResumeByAi = async (data: any[]) => {
+export const getNoteStream = async (data: any[]) => {
   const prompt = getPromptAndSystem("front", {
     systemResource: data,
-  })?.summary.prompt;
+  })?.note.prompt;
 
   const system = getPromptAndSystem("front", {
     systemResource: data,
-  })?.summary.system;
+  })?.note.system;
 
   const { textStream } = await streamText({
     model: model("gemini-1.5-flash-latest"),
     prompt,
     system,
+    maxTokens: 2,
     temperature: 0.8,
-    maxTokens: 203,
   });
 
   const result = createStreamableValue(textStream);

@@ -1,6 +1,15 @@
 import { LandingContainer } from "@/components/landing-container";
+import type { Metadata, ResolvingMetadata } from "next";
 
-export default function Home() {
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default async function Home(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+) {
   return (
     <>
       <LandingContainer />

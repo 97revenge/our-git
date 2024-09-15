@@ -1,12 +1,12 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -59,6 +59,14 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        shimmer: {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
+        },
+        wave: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
         "background-position-spin": {
           "0%": { backgroundPosition: "top center" },
           "100%": { backgroundPosition: "bottom center" },
@@ -102,7 +110,8 @@ const config = {
         },
       },
       animation: {
-
+        shimmer: "shimmer 2s linear infinite",
+        wave: "wave 2s linear infinite",
         backgroundPositionSpin:
           "background-position-spin 3000ms infinite alternate",
         "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
@@ -115,6 +124,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
