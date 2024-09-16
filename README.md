@@ -29,12 +29,12 @@
 
 ## 🔗 Quick Links
 
-> - [📍 Overview](#-overview)
-> - [📦 Features](#-features)
-> - [📂 Repository Structure](#-repository-structure)
-> - [🧩 Modules](#-modules)
-> - [🚀 Getting Started](#-getting-started)
->   - [⚙️ Installation](#️-installation)
+> - [Overview](#-overview)
+> - [ Features](#-features)
+> - [Repository Structure](#-repository-structure)
+> - [Modules](#-modules)
+> - [Getting Started](#-getting-started)
+>   - [Installation](#️-installation)
 >   - [🤖 Running rsc-ai-example](#-running-rsc-ai-example)
 >   - [🧪 Tests](#-tests)
 > - [🛠 Project Roadmap](#-project-roadmap)
@@ -44,19 +44,27 @@
 
 ---
 
-## 📍 Overview
+## Overview
 
-<code>► INSERT-TEXT-HERE</code>
+This project is the result of 6 months of learning with [VERCEL AI SDK](https://sdk.vercel.ai/docs/ai-sdk-rsc), [Machine Learning](https://pt.wikipedia.org/wiki/Aprendizado_de_m%C3%A1quina) & [Stream](https://nodejs.org/api/stream.html#stream).
 
----
-
-## 📦 Features
-
-<code>► INSERT-TEXT-HERE</code>
+The idea of ​​the project is to bring an evaluation page based on the Github user searching for some aspects such as lines of code, programming languages ​​based on fetching with the Github API, thinking about a quality user experience, a brief connection with other developers, personalized and qualified AI results with functional features such as sharing and SEO based on the user entity.
 
 ---
 
-## 📂 Repository Structure
+## Features
+
+- #### Complex and well-managed consumption of the Github API
+
+- #### Type validation using typescript and zod frameworks
+
+- #### Dynamic state based on streamlining the user experience
+
+- #### Design Prompt based on positions in the tech area
+
+---
+
+## Repository Structure
 
 ```sh
 └── rsc-ai-example/
@@ -141,274 +149,5 @@
     ├── tailwind.config.ts
     └── tsconfig.json
 ```
-
----
-
-## 🧩 Modules
-
-<details closed><summary>.</summary>
-
-| File                                                                                             | Summary                                                         |
-| ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
-| [postcss.config.mjs](https://github.com/97revenge/rsc-ai-example/blob/master/postcss.config.mjs) | A tool for transforming CSS with JavaScript                     |
-| [tailwind.config.ts](https://github.com/97revenge/rsc-ai-example/blob/master/tailwind.config.ts) | added required classes and prefix in shadcn/magic-ui components |
-| [components.json](https://github.com/97revenge/rsc-ai-example/blob/master/components.json)       | shadcn-ui configuration json                                    |
-| [tsconfig.json](https://github.com/97revenge/rsc-ai-example/blob/master/tsconfig.json)           | typescript configuration                                        |
-| [package.json](https://github.com/97revenge/rsc-ai-example/blob/master/package.json)             | all my dependencies and commands                                |
-| [next.config.mjs](https://github.com/97revenge/rsc-ai-example/blob/master/next.config.mjs)       | nextjs 14 configuration                                         |
-| []()                                                                                             |                                                                 |
-
-</details>
-
-<details closed><summary>actions</summary>
-
-| File                                                                                       | Summary                                                                                                                                                                                              |
-| ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [user.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/actions/user.tsx)       | AI test implementation, based on Tool Calling                                                                                                                                                        |
-| [mock.ts](https://github.com/97revenge/rsc-ai-example/blob/master/actions/mock.ts)         | mock information for front end development                                                                                                                                                           |
-| [actions.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/actions/actions.tsx) | set of functions that are useful throughout development                                                                                                                                              |
-| [content.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/actions/content.tsx) | searches a user's GitHub repositories, analyzes their programming languages, generates a prompt and system from the obtained data, and finally uses an AI model to generate text based on this data. |
-
-</details>
-
-<details closed><summary>components</summary>
-
-| File                                                                                                                      | Summary                         |
-| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| [EnchancedProfileCard.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/EnchancedProfileCard.tsx)   | <code>► INSERT-TEXT-HERE</code> |
-| [SimpleLoader.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/SimpleLoader.tsx)                   | <code>► INSERT-TEXT-HERE</code> |
-| [EnchancedCard.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/EnchancedCard.tsx)                 | <code>► INSERT-TEXT-HERE</code> |
-| [GitHubProfileExtended.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/GitHubProfileExtended.tsx) | <code>► INSERT-TEXT-HERE</code> |
-| [confetti.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/confetti.tsx)                           | <code>► INSERT-TEXT-HERE</code> |
-| [ArticleAI.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ArticleAI.tsx)                         | <code>► INSERT-TEXT-HERE</code> |
-| [rounded-chart.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/rounded-chart.tsx)                 | <code>► INSERT-TEXT-HERE</code> |
-| [minimalist-profile.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/minimalist-profile.tsx)       | <code>► INSERT-TEXT-HERE</code> |
-| [minimalistProfile.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/minimalistProfile.tsx)         | <code>► INSERT-TEXT-HERE</code> |
-| [landing-container.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/landing-container.tsx)         | <code>► INSERT-TEXT-HERE</code> |
-| [article-review.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/article-review.tsx)               | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
-<details closed><summary>components.motion-variants</summary>
-
-| File                                                                                                          | Summary                         |
-| ------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| [fade-up.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/motion-variants/fade-up.tsx) | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
-<details closed><summary>components.magicui</summary>
-
-| File                                                                                                                                | Summary                         |
-| ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| [shimmer-button.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/magicui/shimmer-button.tsx)                 | <code>► INSERT-TEXT-HERE</code> |
-| [number-ticker.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/magicui/number-ticker.tsx)                   | <code>► INSERT-TEXT-HERE</code> |
-| [confetti.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/magicui/confetti.tsx)                             | <code>► INSERT-TEXT-HERE</code> |
-| [animated-gradient-text.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/magicui/animated-gradient-text.tsx) | <code>► INSERT-TEXT-HERE</code> |
-| [sparkles-text.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/magicui/sparkles-text.tsx)                   | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
-<details closed><summary>components.animata</summary>
-
-| File                                                                                                              | Summary                         |
-| ----------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| [animated-beam.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/animata/animated-beam.tsx) | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
-<details closed><summary>components.ui</summary>
-
-| File                                                                                                         | Summary                         |
-| ------------------------------------------------------------------------------------------------------------ | ------------------------------- |
-| [tabs.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/tabs.tsx)                   | <code>► INSERT-TEXT-HERE</code> |
-| [avatar.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/avatar.tsx)               | <code>► INSERT-TEXT-HERE</code> |
-| [label.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/label.tsx)                 | <code>► INSERT-TEXT-HERE</code> |
-| [chart.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/chart.tsx)                 | <code>► INSERT-TEXT-HERE</code> |
-| [dropdown-menu.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/dropdown-menu.tsx) | <code>► INSERT-TEXT-HERE</code> |
-| [badge.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/badge.tsx)                 | <code>► INSERT-TEXT-HERE</code> |
-| [card.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/card.tsx)                   | <code>► INSERT-TEXT-HERE</code> |
-| [scroll-area.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/scroll-area.tsx)     | <code>► INSERT-TEXT-HERE</code> |
-| [input.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/input.tsx)                 | <code>► INSERT-TEXT-HERE</code> |
-| [button.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/button.tsx)               | <code>► INSERT-TEXT-HERE</code> |
-| [form.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/form.tsx)                   | <code>► INSERT-TEXT-HERE</code> |
-| [tooltip.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/tooltip.tsx)             | <code>► INSERT-TEXT-HERE</code> |
-| [skeleton.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/ui/skeleton.tsx)           | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
-<details closed><summary>components.Skeletons</summary>
-
-| File                                                                                                                                  | Summary                         |
-| ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| [LandingProfileSkeleton.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/Skeletons/LandingProfileSkeleton.tsx) | <code>► INSERT-TEXT-HERE</code> |
-| [BlogPostSkeletton.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/Skeletons/BlogPostSkeletton.tsx)           | <code>► INSERT-TEXT-HERE</code> |
-| [ProfileSkeleton.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/components/Skeletons/ProfileSkeleton.tsx)               | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
-<details closed><summary>lib</summary>
-
-| File                                                                             | Summary                         |
-| -------------------------------------------------------------------------------- | ------------------------------- |
-| [utils.ts](https://github.com/97revenge/rsc-ai-example/blob/master/lib/utils.ts) | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
-<details closed><summary>lib.mock</summary>
-
-| File                                                                                                            | Summary                         |
-| --------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| [jaredpalmer.ts](https://github.com/97revenge/rsc-ai-example/blob/master/lib/mock/jaredpalmer.ts)               | <code>► INSERT-TEXT-HERE</code> |
-| [lucasmontano.ts](https://github.com/97revenge/rsc-ai-example/blob/master/lib/mock/lucasmontano.ts)             | <code>► INSERT-TEXT-HERE</code> |
-| [developit.ts](https://github.com/97revenge/rsc-ai-example/blob/master/lib/mock/developit.ts)                   | <code>► INSERT-TEXT-HERE</code> |
-| [shadcn.ts](https://github.com/97revenge/rsc-ai-example/blob/master/lib/mock/shadcn.ts)                         | <code>► INSERT-TEXT-HERE</code> |
-| [arturbien.ts](https://github.com/97revenge/rsc-ai-example/blob/master/lib/mock/arturbien.ts)                   | <code>► INSERT-TEXT-HERE</code> |
-| [swyxdotio.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/lib/mock/swyxdotio.tsx)                 | <code>► INSERT-TEXT-HERE</code> |
-| [kadikraman.ts](https://github.com/97revenge/rsc-ai-example/blob/master/lib/mock/kadikraman.ts)                 | <code>► INSERT-TEXT-HERE</code> |
-| [shuding.ts](https://github.com/97revenge/rsc-ai-example/blob/master/lib/mock/shuding.ts)                       | <code>► INSERT-TEXT-HERE</code> |
-| [iteratetograceness.ts](https://github.com/97revenge/rsc-ai-example/blob/master/lib/mock/iteratetograceness.ts) | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
-<details closed><summary>lib.zod</summary>
-
-| File                                                                                 | Summary                         |
-| ------------------------------------------------------------------------------------ | ------------------------------- |
-| [user.ts](https://github.com/97revenge/rsc-ai-example/blob/master/lib/zod/user.ts)   | <code>► INSERT-TEXT-HERE</code> |
-| [owner.ts](https://github.com/97revenge/rsc-ai-example/blob/master/lib/zod/owner.ts) | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
-<details closed><summary>prisma</summary>
-
-| File                                                                                          | Summary                         |
-| --------------------------------------------------------------------------------------------- | ------------------------------- |
-| [schema.prisma](https://github.com/97revenge/rsc-ai-example/blob/master/prisma/schema.prisma) | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
-<details closed><summary>app</summary>
-
-| File                                                                                   | Summary                         |
-| -------------------------------------------------------------------------------------- | ------------------------------- |
-| [globals.css](https://github.com/97revenge/rsc-ai-example/blob/master/app/globals.css) | <code>► INSERT-TEXT-HERE</code> |
-| [page.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/app/page.tsx)       | <code>► INSERT-TEXT-HERE</code> |
-| [layout.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/app/layout.tsx)   | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
-<details closed><summary>app.test</summary>
-
-| File                                                                                  | Summary                         |
-| ------------------------------------------------------------------------------------- | ------------------------------- |
-| [page.tsx](https://github.com/97revenge/rsc-ai-example/blob/master/app/test/page.tsx) | <code>► INSERT-TEXT-HERE</code> |
-
-</details>
-
----
-
-## 🚀 Getting Started
-
-**_Requirements_**
-
-Ensure you have the following dependencies installed on your system:
-
-- **TypeScript**: `version x.y.z`
-
-### ⚙️ Installation
-
-1. Clone the rsc-ai-example repository:
-
-```sh
-git clone https://github.com/97revenge/rsc-ai-example
-```
-
-2. Change to the project directory:
-
-```sh
-cd rsc-ai-example
-```
-
-3. Install the dependencies:
-
-```sh
-npm install
-```
-
-### 🤖 Running rsc-ai-example
-
-Use the following command to run rsc-ai-example:
-
-```sh
-npm run build && node dist/main.js
-```
-
-### 🧪 Tests
-
-To execute tests, run:
-
-```sh
-npm test
-```
-
----
-
-## 🛠 Project Roadmap
-
-- [x] `► INSERT-TASK-1`
-- [ ] `► INSERT-TASK-2`
-- [ ] `► ...`
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here are several ways you can contribute:
-
-- **[Submit Pull Requests](https://github.com/97revenge/rsc-ai-example/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
-- **[Join the Discussions](https://github.com/97revenge/rsc-ai-example/discussions)**: Share your insights, provide feedback, or ask questions.
-- **[Report Issues](https://github.com/97revenge/rsc-ai-example/issues)**: Submit bugs found or log feature requests for Rsc-ai-example.
-
-<details closed>
-    <summary>Contributing Guidelines</summary>
-
-1. **Fork the Repository**: Start by forking the project repository to your GitHub account.
-2. **Clone Locally**: Clone the forked repository to your local machine using a Git client.
-   ```sh
-   git clone https://github.com/97revenge/rsc-ai-example
-   ```
-3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
-   ```sh
-   git checkout -b new-feature-x
-   ```
-4. **Make Your Changes**: Develop and test your changes locally.
-5. **Commit Your Changes**: Commit with a clear message describing your updates.
-   ```sh
-   git commit -m 'Implemented new feature x.'
-   ```
-6. **Push to GitHub**: Push the changes to your forked repository.
-   ```sh
-   git push origin new-feature-x
-   ```
-7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
-
-Once your PR is reviewed and approved, it will be merged into the main branch.
-
-</details>
-
----
-
-## 📄 License
-
-This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
-
----
-
-## 👏 Acknowledgments
-
-- List any resources, contributors, inspiration, etc. here.
-
-[**Return**](#-quick-links)
 
 ---

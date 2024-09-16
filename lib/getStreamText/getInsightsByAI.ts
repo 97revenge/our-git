@@ -17,11 +17,17 @@ export const getInsightsByAi = async (data: any[], login: string) => {
 
   // Iterate through each insight in the 'insights' array
   for (const insight of inchargePrompts.insights as Array<{
-    prompt: string;
-    system: string;
+    title: {
+      system: string;
+      prompt: string;
+    };
+    content: {
+      system: string;
+      prompt: string;
+    };
   }>) {
-    const prompt = insight.prompt;
-    const system = insight.system;
+    const prompt = insight.title.prompt;
+    const system = insight.title.system;
 
     // Generate the text for each insight
     const { text } = await generateText({
