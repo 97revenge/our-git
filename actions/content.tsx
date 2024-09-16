@@ -5,6 +5,7 @@ import { repoSchema } from "@/lib/zod/owner";
 import { getNoteStream } from "@/lib/getStreamText/getNoteByAI";
 import { getResumeByAi } from "@/lib/getStreamText/getResumeByAI";
 import useUser from "@/lib/provider/UserProvider";
+import { getInsightsByAi } from "@/lib/getStreamText/getInsightsByAI";
 
 export const content = async (
   username: string,
@@ -82,12 +83,14 @@ export const content = async (
     [language]: value,
   }));
 
-  const result = await getNoteStream(treatmentData.code);
-  const resume = await getResumeByAi(treatmentData.code);
+  const result = await getNoteStream(treatmentData.code, username);
+  const resume = await getResumeByAi(treatmentData.code, username);
+  const insights = await getInsightsByAi(treatmentData.code, username);
 
   return {
     treatmentData,
     treatMentNoteData: result.value,
-    treatmentResumeData: resume.value,
+    treatmentResumeData: resume,
+    treatmentInsightsData: insights,
   };
 };

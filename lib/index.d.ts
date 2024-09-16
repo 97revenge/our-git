@@ -10,12 +10,24 @@ export type InstanceNote = [
   }
 ];
 
-type blocks<V, O> = O[{ system: T; prompt: T }];
+type Insights = Array<{
+  title: {
+    system: string;
+    prompt: string;
+  };
+  content: {
+    system: string;
+    prompt: string;
+  };
+}>;
+
+type blocks = Insights;
+
 export type ScaffoldType<T> = {
   note: T;
   summary: T;
-  insights: blocks<string, object>;
-  improvment: blocks<string, object>;
+  insights: blocks;
+  improvment: blocks;
 };
 
 export type StandartIncharges<T> = {

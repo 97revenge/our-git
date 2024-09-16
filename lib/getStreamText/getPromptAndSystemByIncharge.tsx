@@ -46,34 +46,22 @@ Tone:
         },
         insights: [
           {
-            prompt: `
+            title: {
+              prompt: `
           based on this information: 
           ${JSON.stringify(data?.systemResource)}
 Give me a title of just 2 words seeking a positive insight into this profile
           `,
-            system:
-              "You are a super competent assistant who only delivers 2 words about programming insights and super growth among programmers",
-          },
-          {
-            prompt: `
-          based on this information: 
-          ${JSON.stringify(data?.systemResource)}
-Give me a title of just 2 words seeking a positive insight into this profile
-          `,
-            system:
-              "You are a super competent assistant who only delivers 2 words about code quality and good implementations",
-          },
-          {
-            prompt: `
-          based on this information: 
-          ${JSON.stringify(data?.systemResource)}
-Give me a title of just 2 words seeking a positive insight into this profile
-          `,
-            system:
-              "You are a super competent assistant who only delivers 2 words about Developer Carrer  and Productivity",
+              system:
+                "You are a super competent assistant who only delivers 2 words about programming insights and super growth among programmers",
+            },
+            content: {
+              prompt: "",
+              system: "",
+            },
           },
         ],
-        improvment: [{ prompt: "", system: "" }],
+        improvment: [],
       },
     };
 
