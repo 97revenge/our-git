@@ -50,14 +50,17 @@ Tone:
               prompt: `
           based on this information: 
           ${JSON.stringify(data?.systemResource)}
-Give me a title of just 2 words seeking a positive insight into this profile
+Give me a title of just 2 words seeking a positive insight into this profile about PRODUCTIVITY
           `,
               system:
-                "You are a super competent assistant who only delivers 2 words about programming insights and super growth among programmers",
+                "You are a super competent assistant who only delivers 2 words about programming insights and super growth among programmers about PRODUTIVITY and nothing less about it",
             },
             content: {
-              prompt: "",
-              system: "",
+              prompt: `based on this content:   ${JSON.stringify(
+                data?.systemResource
+              )} give me 12 words insights into PRODUCTIVITY`,
+              system:
+                "You are a super competent assistant who only delivers 12  words insights about programming insights and super growth among programmers about PRODUTIVITY and nothing less about it",
             },
           },
         ],

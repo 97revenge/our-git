@@ -87,8 +87,6 @@ export const content = async (
   const resume = await getResumeByAi(treatmentData.code, username);
   const insights = await getInsightsByAi(treatmentData.code, username);
 
-  console.log(JSON.stringify(insights));
-
   return {
     treatmentData,
     treatMentNoteData: result.value,

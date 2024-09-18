@@ -60,6 +60,8 @@ import { StatisticCard } from "./statistic-card";
 import type { Metadata } from "next";
 import Markdown from "react-markdown";
 import { AiSummarySkeleton } from "./ai-summary-skeleton";
+import { InsightsSkeletonLoader } from "./insights-skeleton-loader";
+import { SkeletonLinesOfCode } from "./skeleton-loader";
 
 const optionSchema = z.object({
   label: z.string(),
@@ -445,9 +447,17 @@ export const LandingContainer = () => {
               <MinimalistProfile>
                 <NoteComponent value={note} />
                 <div className="flex flex-col w-full max-w-2xl">
-                  <GitHubLanguageChart
-                    content={graphChart as GraphChart<string | number>[]}
-                  />
+                  {isPending ? (
+                    <>
+                      <SkeletonLinesOfCode />
+                    </>
+                  ) : (
+                    <>
+                      <GitHubLanguageChart
+                        content={graphChart as GraphChart<string | number>[]}
+                      />
+                    </>
+                  )}
                 </div>
               </MinimalistProfile>
               {isPending ? (
@@ -463,24 +473,12 @@ export const LandingContainer = () => {
               )}
 
               <div className="w-full flex flex-col justify-center items-center">
-                <div className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200 px-6 pb-2 pt-1 m-2">
-                  <InsightComponent>
-                    {insights.map(
-                      (item: { title: string; content: string }) => {
-                        return (
-                          <>
-                            <InsightCard
-                              icon={<Zap className="w-6 h-6 text-purple-500" />}
-                              title={item.title}
-                              description={item.content}
-                              color="bg-purple-100 dark:bg-purple-900"
-                              tooltipContent="Gold Tier status is typically achieved through consistent, high-quality contributions and community engagement."
-                            />
-                          </>
-                        );
-                      }
-                    )}
-                  </InsightComponent>
+                {/* <InsightComponent>
+                  <InsightsSkeletonLoader />
+                </InsightComponent> */}
+
+                <div className="w-full max-w-3xl   rounded-xl shadow-lg transition-colors duration-200 ">
+                  <InsightsSkeletonLoader />
                 </div>
                 <div className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200 px-6 pb-2 pt-1 m-2">
                   <ImprovmentComponent />

@@ -60,17 +60,17 @@ export const NoteComponent = ({ value }: Props<string | any>) => {
 
   return (
     <>
-      <Card className="flex flex-col w-full max-w-2xl ">
-        <CardHeader className="items-center pb-0">
+      <Card className=" transition-all flex flex-col w-full max-w-sm shadow-xl ">
+        <CardHeader className=" transition-all items-center pb-0">
           <CardTitle>Radial Chart - Text</CardTitle>
           <CardDescription>
             <Badge variant={"default"}>Based by your user</Badge>{" "}
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-1 pb-0">
+        <CardContent className=" transition-all flex-1 pb-0">
           <ChartContainer
             config={chartConfig}
-            className="mx-auto aspect-square max-h-[250px]"
+            className=" transition-all mx-auto aspect-square max-h-[250px]"
           >
             <RadialBarChart
               data={[
@@ -89,7 +89,7 @@ export const NoteComponent = ({ value }: Props<string | any>) => {
                 gridType="circle"
                 radialLines={false}
                 stroke="none"
-                className="first:fill-muted last:fill-background"
+                className=" transition-all first:fill-muted last:fill-background"
                 polarRadius={[86, 74]}
               />
               <RadialBar dataKey="note" background cornerRadius={10} />
@@ -107,7 +107,7 @@ export const NoteComponent = ({ value }: Props<string | any>) => {
                           <tspan
                             x={viewBox.cx}
                             y={viewBox.cy}
-                            className="fill-foreground text-4xl font-bold"
+                            className=" transition-all fill-foreground text-4xl font-bold"
                           >
                             {[
                               {
@@ -120,7 +120,7 @@ export const NoteComponent = ({ value }: Props<string | any>) => {
                           <tspan
                             x={viewBox.cx}
                             y={(viewBox.cy || 0) + 24}
-                            className="fill-muted-foreground"
+                            className=" transition-all fill-muted-foreground"
                           >
                             note
                           </tspan>
@@ -133,7 +133,7 @@ export const NoteComponent = ({ value }: Props<string | any>) => {
             </RadialBarChart>
           </ChartContainer>
         </CardContent>
-        <CardFooter className="flex-col gap-2 text-sm"></CardFooter>
+        <CardFooter className=" transition-all flex-col gap-2 text-sm"></CardFooter>
       </Card>
     </>
   );

@@ -14,7 +14,6 @@ export const getInsightsByAi = async (data: any[], login: string) => {
 
   const insightsResults: string | object[] = [];
 
-  // Iterate through each insight in the 'insights' array
   for (const insight of inchargePrompts.insights as Array<{
     title: {
       system: string;
@@ -29,6 +28,8 @@ export const getInsightsByAi = async (data: any[], login: string) => {
       const prompt = insight.title.prompt;
       const system = insight.title.system;
 
+      console.log({ prompt: prompt, system: system });
+
       const { text } = await generateText({
         model: model("gemini-1.5-flash-latest"),
         prompt,
@@ -39,14 +40,14 @@ export const getInsightsByAi = async (data: any[], login: string) => {
       return text;
     };
     const generateContent = async () => {
-      const prompt = insight.title.prompt;
-      const system = insight.title.system;
+      const prompt = insight.content.prompt;
+      const system = insight.content.system;
 
       const { text } = await generateText({
         model: model("gemini-1.5-flash-latest"),
         prompt,
         system,
-        temperature: 0.8,
+        temperature: 0.5,
       });
 
       return text;
