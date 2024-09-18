@@ -103,7 +103,7 @@ export const LandingContainer = () => {
 
   const [resume, setResume] = useState<any>("");
 
-  const [insight, setInsight] = useState<any>("");
+  const [insights, setInsights] = useState<any[]>([]);
 
   const [graphChart, setGraphChart] = useState<GraphChart<string | number>[]>(
     []
@@ -128,6 +128,7 @@ export const LandingContainer = () => {
         setNote(noteContent); // Update the state once with the complete content
 
         setResume(treatmentResumeData);
+        setInsights(treatmentInsightsData);
       });
     } catch (err) {
       if (err instanceof Error) {
@@ -464,27 +465,21 @@ export const LandingContainer = () => {
               <div className="w-full flex flex-col justify-center items-center">
                 <div className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200 px-6 pb-2 pt-1 m-2">
                   <InsightComponent>
-                    <InsightCard
-                      icon={<Zap className="w-6 h-6 text-purple-500" />}
-                      title="Rapid Growth"
-                      description="Gained Gold Tier status in just 3 years, showcasing exceptional progress and contribution."
-                      color="bg-purple-100 dark:bg-purple-900"
-                      tooltipContent="Gold Tier status is typically achieved through consistent, high-quality contributions and community engagement."
-                    />
-                    <InsightCard
-                      icon={<TrendingUp className="w-6 h-6 text-pink-500" />}
-                      title="Community Impact"
-                      description="High follower count of 1,234 indicates strong influence in the developer community."
-                      color="bg-pink-100 dark:bg-pink-900"
-                      tooltipContent="Followers often indicate the reach and impact of a developer's work and ideas within the GitHub ecosystem."
-                    />
-                    <InsightCard
-                      icon={<Award className="w-6 h-6 text-blue-500" />}
-                      title="Creative Coder"
-                      description="Unique blend of art and code, potentially pioneering new approaches in creative coding."
-                      color="bg-blue-100 dark:bg-blue-900"
-                      tooltipContent="Creative coding often involves using programming to create visual art, interactive experiences, or innovative user interfaces."
-                    />
+                    {insights.map(
+                      (item: { title: string; content: string }) => {
+                        return (
+                          <>
+                            <InsightCard
+                              icon={<Zap className="w-6 h-6 text-purple-500" />}
+                              title={item.title}
+                              description={item.content}
+                              color="bg-purple-100 dark:bg-purple-900"
+                              tooltipContent="Gold Tier status is typically achieved through consistent, high-quality contributions and community engagement."
+                            />
+                          </>
+                        );
+                      }
+                    )}
                   </InsightComponent>
                 </div>
                 <div className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200 px-6 pb-2 pt-1 m-2">
