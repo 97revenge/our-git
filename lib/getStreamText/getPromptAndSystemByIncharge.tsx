@@ -58,9 +58,9 @@ Give me a title of just 2 words seeking a positive insight into this profile abo
             content: {
               prompt: `based on this content:   ${JSON.stringify(
                 data?.systemResource
-              )} give me 12 words insights into PRODUCTIVITY`,
+              )} give me 15 words insights into PRODUCTIVITY, referencing quality content that will improve the person's experience, not so focused on code lines`,
               system:
-                "You are a super competent assistant who only delivers 12  words insights about programming insights and super growth among programmers about PRODUTIVITY and nothing less about it",
+                "You are a super competent assistant who only delivers 15  words insights about programming insights and super growth among programmers about PRODUTIVITY and nothing less about it",
             },
           },
           {
@@ -76,9 +76,9 @@ Give me a title of just 2 words seeking a positive insight into this profile abo
             content: {
               prompt: `based on this content:   ${JSON.stringify(
                 data?.systemResource
-              )} give me 12 words insights into PROGRAMMING LOGIC`,
+              )} give me 15 words insights into PROGRAMMING LOGIC,giving quality and a different point of view from the previous ones, authenticity in the words`,
               system:
-                "You are a super competent assistant who only delivers 12  words insights about programming insights and super growth among programmers about PROGRAMMING LOGIC and nothing less about it",
+                "You are a super competent assistant who only delivers 15  words insights about programming insights and super growth among programmers about PROGRAMMING LOGIC and nothing less about it",
             },
           },
           {
@@ -94,9 +94,9 @@ Give me a title of just 2 words seeking a positive insight into this profile abo
             content: {
               prompt: `based on this content:   ${JSON.stringify(
                 data?.systemResource
-              )} give me 12 words insights into DEVELOPER CARRER`,
+              )} give me 15 words insights into DEVELOPER CARRER,guided by the qualification of the user's programming languages ​​and delivering a result that will make a difference to this user's career`,
               system:
-                "You are a super competent assistant who only delivers 12  words insights about programming insights and super growth among programmers about DEVELOPER CARRER and nothing less about it",
+                "You are a super competent assistant who only delivers 15  words insights about programming insights and super growth among programmers about DEVELOPER CARRER and nothing less about it",
             },
           },
         ],

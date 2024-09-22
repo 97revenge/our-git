@@ -65,7 +65,7 @@ import { InsightsSkeletonLoader } from "./insights-skeleton-loader";
 import { SkeletonLinesOfCode } from "./skeleton-loader";
 import GoodInsights from "./good-insights";
 import ImprovmentComponent from "./improvment-component";
-import { DeveloperInsightsSkeleton } from "@/components/developer-insights-skeleton";
+import DeveloperInsightsSkeleton from "@/components/developer-insights-skeleton";
 
 const optionSchema = z.object({
   label: z.string(),

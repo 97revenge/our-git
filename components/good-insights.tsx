@@ -1,15 +1,8 @@
 "use client";
 
-import { useEffect, useState, type ElementType } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Code2,
-  Brain,
-  Lightbulb,
-  CodeIcon,
-  GitBranchIcon,
-  TrendingUpIcon,
-} from "lucide-react";
+import { Code2, Brain, Lightbulb } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Insights = Array<{
@@ -24,8 +17,36 @@ export default function GoodInsights({ insights }: { insights: Insights }) {
   const [instance, setInstance] = useState<Insights>([]);
 
   useEffect(() => {
-    setInstance(insights);
-  });
+    const updatedInsights = insights.map((insight, index) => {
+      let color: string, icon: JSX.Element;
+
+      switch (index) {
+        case 0:
+          color = "from-blue-500 to-blue-700"; // Gradient colors for first insight
+          icon = <Code2 className="w-5 h-5 sm:w-6 sm:h-6" />; // Icon for first insight
+          break;
+        case 1:
+          color = "from-green-500 to-green-700"; // Colors for second insight
+          icon = <Brain className="w-5 h-5 sm:w-6 sm:h-6" />; // Icon for second insight
+          break;
+        case 2:
+          color = "from-yellow-500 to-yellow-700"; // Colors for third insight
+          icon = <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6" />; // Icon for third insight
+          break;
+        default:
+          color = "from-gray-500 to-gray-700";
+          icon = <Code2 className="w-5 h-5 sm:w-6 sm:h-6" />;
+      }
+
+      return {
+        ...insight,
+        color,
+        icon,
+      };
+    });
+
+    setInstance(updatedInsights);
+  }, [insights]);
 
   return (
     <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
@@ -53,9 +74,9 @@ export default function GoodInsights({ insights }: { insights: Insights }) {
               />
               <CardHeader className="flex flex-row items-center gap-3 pb-2">
                 <div
-                  className={`p-2 rounded-lg bg-gradient-to-br ${insight.color} text-white`}
+                  className={`p-2 rounded-lg bg-gradient-to-br ${insight?.color} text-white`}
                 >
-                  {/* <insights.icon className="w-5 h-5 sm:w-6 sm:h-6" /> */}
+                  {insight?.icon as React.ReactNode}
                 </div>
                 <CardTitle className="text-lg sm:text-xl text-gray-800 dark:text-white">
                   {insight.title}
@@ -66,15 +87,7 @@ export default function GoodInsights({ insights }: { insights: Insights }) {
                   {insight.content}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {/* {insight.tags.map((tag) => (
-                    <Badge
-                      key={tag}
-                      variant="secondary"
-                      className="text-xs sm:text-sm bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                    >
-                      {tag}
-                    </Badge>
-                  ))} */}
+                  {/* Additional tags or other content can go here */}
                 </div>
               </CardContent>
             </Card>
