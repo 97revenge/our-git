@@ -1,101 +1,85 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, type ElementType } from "react";
 import { motion } from "framer-motion";
-import { Code2, Brain, Lightbulb } from "lucide-react";
+import {
+  Code2,
+  Brain,
+  Lightbulb,
+  CodeIcon,
+  GitBranchIcon,
+  TrendingUpIcon,
+} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-// const insights = [
-//   {
-//     title: "JavaScript Dominates",
-//     description:
-//       "PHP dominates, JavaScript and TypeScript rise, niche languages struggle.",
-//     icon: Code2,
-//     color: "from-yellow-400 to-orange-500",
-//   },
-//   {
-//     title: "Logic Variety",
-//     description:
-//       "JavaScript and TypeScript dominate, highlighting logic for web development.",
-//     icon: Brain,
-//     color: "from-blue-400 to-indigo-500",
-//   },
-//   {
-//     title: "Diverse Skills",
-//     description:
-//       "JavaScript and TypeScript dominate, niche skills have value, constant learning is key.",
-//     icon: Lightbulb,
-//     color: "from-green-400 to-emerald-500",
-//   },
-// ];
+type Insights = Array<{
+  icon?: Partial<React.ReactNode>;
+  color?: string;
+  content: string;
+  title: string;
+}>;
 
-export function GoodInsights({ tag }: { tag: any[] }) {
+export default function GoodInsights({ insights }: { insights: Insights }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [instance, setInstance] = useState<Insights>([]);
+
+  useEffect(() => {
+    setInstance(insights);
+  });
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 bg-white rounded-2xl shadow-lg max-w-7xl mx-auto">
-      <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
-        Good Insights
+    <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        Developer Insights
       </h2>
-      <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
-        Based on your user profile
+      <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6 sm:mb-8">
+        Based on your user profile and recent activity
       </p>
-      <div className="flex flex-col lg:flex-row lg:space-x-6 space-y-6 lg:space-y-0">
-        {tag.map(
-          (
-            insight: {
-              color: "#26c485" | "#ecffb0" | "6d98ba";
-              title: string;
-              content: string;
-            },
-            index
-          ) => (
-            <motion.div
-              key={index}
-              className="relative bg-gray-50 rounded-xl p-4 sm:p-6 cursor-pointer transition-all duration-300 border border-gray-200 flex-1"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
-            >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        {instance.map((insight, index) => (
+          <motion.div
+            key={index}
+            className="relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            whileHover={{ y: -5 }}
+            onHoverStart={() => setHoveredIndex(index)}
+            onHoverEnd={() => setHoveredIndex(null)}
+          >
+            <Card className="bg-gray-50 dark:bg-gray-800 border-none hover:shadow-md transition-shadow duration-300 h-full">
               <div
-                className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${insight?.color} rounded-t-xl`}
+                className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${insight.color} rounded-t-lg`}
               />
-              <div className="flex items-center mb-4">
+              <CardHeader className="flex flex-row items-center gap-3 pb-2">
                 <div
-                  className={`p-2 rounded-lg bg-gradient-to-br ${insight?.color}`}
-                ></div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-800 ml-3">
-                  {insight?.title}
-                </h3>
-              </div>
-              <p className="text-sm sm:text-base text-gray-600">
-                {insight?.content}
-              </p>
-              {hoveredIndex === index && (
-                <motion.div
-                  className="mt-4 text-sm font-medium text-gray-500 flex items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  className={`p-2 rounded-lg bg-gradient-to-br ${insight.color} text-white`}
                 >
-                  <span className="mr-2">Learn more</span>
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </motion.div>
-              )}
-            </motion.div>
-          )
-        )}
+                  {/* <insights.icon className="w-5 h-5 sm:w-6 sm:h-6" /> */}
+                </div>
+                <CardTitle className="text-lg sm:text-xl text-gray-800 dark:text-white">
+                  {insight.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base mb-3">
+                  {insight.content}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {/* {insight.tags.map((tag) => (
+                    <Badge
+                      key={tag}
+                      variant="secondary"
+                      className="text-xs sm:text-sm bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                    >
+                      {tag}
+                    </Badge>
+                  ))} */}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
       </div>
     </div>
   );

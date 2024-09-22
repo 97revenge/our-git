@@ -56,14 +56,16 @@ import { GitHubLanguageChart } from "./language-bar-chart";
 import { SmoothSkeletonLoader } from "./smooth-skeleton-loader";
 import { ResumeComponent } from "./ResumeComponent";
 import { InsightCard, InsightComponent } from "./insight-component";
-import { ImprovementCard, ImprovmentComponent } from "./improvment-component";
+import ImprovementCard from "./improvment-component";
 import { StatisticCard } from "./statistic-card";
 import type { Metadata } from "next";
 import Markdown from "react-markdown";
 import { AiSummarySkeleton } from "./ai-summary-skeleton";
 import { InsightsSkeletonLoader } from "./insights-skeleton-loader";
 import { SkeletonLinesOfCode } from "./skeleton-loader";
-import { GoodInsights } from "./good-insights";
+import GoodInsights from "./good-insights";
+import ImprovmentComponent from "./improvment-component";
+import { DeveloperInsightsSkeleton } from "@/components/developer-insights-skeleton";
 
 const optionSchema = z.object({
   label: z.string(),
@@ -482,11 +484,11 @@ export const LandingContainer = () => {
                 <div className="w-full max-w-3xl   rounded-xl shadow-lg transition-colors duration-200 ">
                   {isPending ? (
                     <>
-                      <InsightsSkeletonLoader />
+                      <DeveloperInsightsSkeleton />
                     </>
                   ) : (
                     <>
-                      <GoodInsights tag={insights} />
+                      <GoodInsights insights={insights} />
                     </>
                   )}
                 </div>
