@@ -30,10 +30,18 @@ export async function generateMetadata(
   };
 }
 
-export default function Page() {
+export default function Page({
+  params,
+}: {
+  params: {
+    id: string;
+  };
+}) {
+  // agente passa um loader aqui tambem !
+  // aquele baseado na tela ou fazer isso na "/" rota.
   return (
     <>
-      <FillingComponent />
+      <FillingComponent params={params.id} />
     </>
   );
 }

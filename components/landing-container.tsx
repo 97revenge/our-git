@@ -66,12 +66,8 @@ import { SkeletonLinesOfCode } from "./skeleton-loader";
 import GoodInsights from "./good-insights";
 import ImprovmentComponent from "./improvment-component";
 import DeveloperInsightsSkeleton from "@/components/developer-insights-skeleton";
-
-const optionSchema = z.object({
-  label: z.string(),
-  value: z.string(),
-  disable: z.boolean().optional(),
-});
+import { useRouter } from "next/navigation";
+import { githubUser } from "@/lib/zod/githubUser";
 
 const OPTIONS: Option[] = [
   { label: "Front-End Developer", value: "front" },
@@ -81,24 +77,8 @@ const OPTIONS: Option[] = [
   { label: "Designer Developer", value: "designer" },
 ];
 
-const githubUser = z.object({
-  username: z
-    .string()
-    .min(5, { message: "Minimum of characters is 5" })
-    .max(35, { message: "Maximum of characters is 35" })
-    .refine(
-      async (val) => {
-        const response = await fetch(`https://api.github.com/users/${val}`);
-        return response.ok && response.status === 200;
-      },
-      {
-        message: "This user does not exist on GitHub",
-      }
-    ),
-  developer: z.array(optionSchema).min(1),
-});
-
 export const LandingContainer = () => {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const [view, setView] = useState<boolean>(false);
@@ -116,6 +96,20 @@ export const LandingContainer = () => {
   );
 
   const handler = async (e: z.infer<typeof githubUser>) => {
+    try {
+      startTransition(async () => {
+        return router.push(
+          `/test/${e.username}?incharge=${e.developer[0].value}`
+        );
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.cause);
+      }
+    }
+  };
+
+  const _handler = async (e: z.infer<typeof githubUser>) => {
     try {
       setView(!view);
       startTransition(async () => {
