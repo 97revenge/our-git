@@ -63,6 +63,42 @@ Give me a title of just 2 words seeking a positive insight into this profile abo
                 "You are a super competent assistant who only delivers 12  words insights about programming insights and super growth among programmers about PRODUTIVITY and nothing less about it",
             },
           },
+          {
+            title: {
+              prompt: `
+          based on this information: 
+          ${JSON.stringify(data?.systemResource)}
+Give me a title of just 2 words seeking a positive insight into this profile about PROGRAMMING LOGIC
+          `,
+              system:
+                "You are a super competent assistant who only delivers 2 words about programming insights and super growth among programmers about PROGRAMMING LOGIC and nothing less about it",
+            },
+            content: {
+              prompt: `based on this content:   ${JSON.stringify(
+                data?.systemResource
+              )} give me 12 words insights into PROGRAMMING LOGIC`,
+              system:
+                "You are a super competent assistant who only delivers 12  words insights about programming insights and super growth among programmers about PROGRAMMING LOGIC and nothing less about it",
+            },
+          },
+          {
+            title: {
+              prompt: `
+          based on this information: 
+          ${JSON.stringify(data?.systemResource)}
+Give me a title of just 2 words seeking a positive insight into this profile about DEVELOPER CARRER
+          `,
+              system:
+                "You are a super competent assistant who only delivers 2 words about programming insights and super growth among programmers about DEVELOPER CARRER and nothing less about it",
+            },
+            content: {
+              prompt: `based on this content:   ${JSON.stringify(
+                data?.systemResource
+              )} give me 12 words insights into DEVELOPER CARRER`,
+              system:
+                "You are a super competent assistant who only delivers 12  words insights about programming insights and super growth among programmers about DEVELOPER CARRER and nothing less about it",
+            },
+          },
         ],
         improvment: [],
       },

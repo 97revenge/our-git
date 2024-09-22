@@ -4,6 +4,7 @@ import { GraphChart } from "@/lib/index";
 import {
   ArrowRightIcon,
   Award,
+  BookOpen,
   Github,
   Globe,
   TrendingUp,
@@ -55,13 +56,14 @@ import { GitHubLanguageChart } from "./language-bar-chart";
 import { SmoothSkeletonLoader } from "./smooth-skeleton-loader";
 import { ResumeComponent } from "./ResumeComponent";
 import { InsightCard, InsightComponent } from "./insight-component";
-import { ImprovmentComponent } from "./improvment-component";
+import { ImprovementCard, ImprovmentComponent } from "./improvment-component";
 import { StatisticCard } from "./statistic-card";
 import type { Metadata } from "next";
 import Markdown from "react-markdown";
 import { AiSummarySkeleton } from "./ai-summary-skeleton";
 import { InsightsSkeletonLoader } from "./insights-skeleton-loader";
 import { SkeletonLinesOfCode } from "./skeleton-loader";
+import { GoodInsights } from "./good-insights";
 
 const optionSchema = z.object({
   label: z.string(),
@@ -478,7 +480,15 @@ export const LandingContainer = () => {
                 </InsightComponent> */}
 
                 <div className="w-full max-w-3xl   rounded-xl shadow-lg transition-colors duration-200 ">
-                  <InsightsSkeletonLoader />
+                  {isPending ? (
+                    <>
+                      <InsightsSkeletonLoader />
+                    </>
+                  ) : (
+                    <>
+                      <GoodInsights tag={insights} />
+                    </>
+                  )}
                 </div>
                 <div className="w-full max-w-3xl  bg-white dark:bg-[#1e2124] rounded-xl shadow-lg transition-colors duration-200 px-6 pb-2 pt-1 m-2">
                   <ImprovmentComponent />

@@ -41,7 +41,7 @@ export const ImprovmentComponent = () => {
   );
 };
 
-function ImprovementCard({
+export function ImprovementCard({
   icon,
   title,
   description,

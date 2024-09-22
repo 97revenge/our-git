@@ -5,15 +5,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { Badge } from "./ui/badge";
 
 export const InsightComponent = ({ ...props }) => {
   return (
     <>
       <TooltipProvider>
-        <div className="mt-8">
-          <h2 className="text-lx font-semibold mb-4 underline">
+        <div className=" p-8 bg-white dark:bg-secondary rounded-2xl">
+          <h2 className="text-2xl font-semibold mb-4 text-green">
             Good Insights
           </h2>
+          <Badge>Based by your user</Badge>
           <div
             className="grid grid-cols-1 md:grid-cols-3 gap-4"
             {...props}
