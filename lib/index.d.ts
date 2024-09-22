@@ -1,3 +1,5 @@
+import { expectType } from "tsd";
+
 export type GraphChart<T> = {
   [index: string]: T;
 };
@@ -48,3 +50,15 @@ export interface RebootIncharges
 //   extends StandartIncharges<ScaffoldType<string>> {}
 // CommunityIncharges se referencia de StandartIncharges porem
 // permite receber qualquer chave mesmo que nao seja declarada.
+
+export declare type GenerateMetadataProps = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+declare const concat: {
+  (value1: string, value2: string): string;
+  (value1: number, value2: number): string;
+};
+
+export default concat;
