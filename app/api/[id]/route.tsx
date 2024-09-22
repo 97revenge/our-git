@@ -1,10 +1,8 @@
-import type { NextApiRequest } from "next";
 import { ImageResponse } from "next/og";
+import type { NextRequest } from "next/server";
 
-export const runtime = "edge";
-
-export async function GET(request: NextApiRequest) {
-  const id = request.headers.id;
+export const GET = async (request: NextRequest) => {
+  const id = request.credentials;
 
   const instance = await fetch(`https//:www.api.github.com/users/${id}`);
 
@@ -98,4 +96,4 @@ export async function GET(request: NextApiRequest) {
       ],
     }
   );
-}
+};

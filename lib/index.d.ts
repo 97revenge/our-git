@@ -41,7 +41,7 @@ export type StandartIncharges<T> = {
   design?: T;
 };
 
-export interface RebootIncharges
+export declare interface RebootIncharges
   extends StandartIncharges<ScaffoldType<{ prompt: string; system: string }>> {}
 
 // Generics mantem o tipo reútilizavel

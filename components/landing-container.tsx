@@ -109,36 +109,6 @@ export const LandingContainer = () => {
     }
   };
 
-  const _handler = async (e: z.infer<typeof githubUser>) => {
-    try {
-      setView(!view);
-      startTransition(async () => {
-        const { chartData } = await chart();
-        const {
-          treatmentData,
-          treatMentNoteData,
-          treatmentResumeData,
-          treatmentInsightsData,
-        } = await content(e.username, e.developer as any);
-        setGraphChart(treatmentData?.code as any[]);
-        let noteContent = "";
-        for await (const chunk of readStreamableValue(treatMentNoteData)) {
-          noteContent += chunk;
-        }
-        setNote(noteContent); // Update the state once with the complete content
-
-        setResume(treatmentResumeData);
-        setInsights(treatmentInsightsData);
-      });
-    } catch (err) {
-      if (err instanceof Error) {
-        alert(JSON.stringify(err.message));
-        alert(JSON.stringify(err.cause));
-        setView(false);
-      }
-    }
-  };
-
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
@@ -172,9 +142,6 @@ export const LandingContainer = () => {
 
   return (
     <>
-      {/* Header */}
-      {/* Main Content */}
-
       <AnimatedBeam className="transition-all transition-all h-full flex items-center justify-center">
         <FadeUp stagger={0.15}>
           <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
