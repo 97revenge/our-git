@@ -25,10 +25,12 @@ export const FillingComponent = ({ params }: { params: string }) => {
 
   const [note, setNote] = useState<string>("");
   const [resume, setResume] = useState<any>("");
-  const [insights, setInsights] = useState<any[]>([]);
   const [graphChart, setGraphChart] = useState<GraphChart<string | number>[]>(
     []
   );
+  const [insights, setInsights] = useState<any[]>([]);
+
+  const [improvment, setImprovment] = useState<any[]>([]);
 
   const [isPending, startTransition] = useTransition();
 

@@ -1,5 +1,6 @@
 import { LandingContainer } from "@/components/landing-container";
 import type { Metadata, ResolvingMetadata } from "next";
+import { Suspense } from "react";
 
 type Props = {
   params: { id: string };
@@ -12,7 +13,9 @@ export default async function Home(
 ) {
   return (
     <>
-      <LandingContainer />
+      <Suspense>
+        <LandingContainer />
+      </Suspense>
     </>
   );
 }

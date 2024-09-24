@@ -1,4 +1,3 @@
-import { Award, Info, TrendingUp, Zap } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -6,6 +5,7 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { Badge } from "./ui/badge";
+import { Info } from "lucide-react";
 
 export const InsightComponent = ({ ...props }) => {
   return (

@@ -68,6 +68,7 @@ import ImprovmentComponent from "./improvment-component";
 import DeveloperInsightsSkeleton from "@/components/developer-insights-skeleton";
 import { useRouter } from "next/navigation";
 import { githubUser } from "@/lib/zod/githubUser";
+import { WordUp } from "./variant-vault/WordUp";
 
 const OPTIONS: Option[] = [
   { label: "Front-End Developer", value: "front" },
@@ -142,39 +143,39 @@ export const LandingContainer = () => {
 
   return (
     <>
-      <AnimatedBeam className="transition-all transition-all h-full flex items-center justify-center">
+      <AnimatedBeam className="transition-all  h-full flex items-center justify-center w-full ">
         <FadeUp stagger={0.15}>
           <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
           {view === false ? (
             <>
-              <main className="transition-all transition-all flex-grow flex flex-col items-center justify-start w-full h-full   ">
-                <div className="transition-all transition-all w-full  ">
+              <main className="transition-all  flex-grow flex flex-col items-center justify-start w-full h-full   ">
+                <div className="transition-all  w-full  ">
                   <div
-                    className="transition-all transition-all  flex flex-col
+                    className="transition-all   flex flex-col
                   items-center justify-center w-full "
                   >
-                    <h1 className="transition-all transition-all bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance sm:text-6xl md:text-7xl lg:text-8xl   ">
+                    <h1 className="transition-all  bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance sm:text-6xl md:text-7xl lg:text-8xl   ">
                       Enchance your{" "}
-                      <u className="transition-all transition-all bg-gradient-to-br dark:from-white from-pink-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
+                      <u className="transition-all  bg-gradient-to-br dark:from-white from-pink-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
                         bio
                       </u>
                       <br />
                       With{" "}
-                      <u className="transition-all transition-all bg-gradient-to-br dark:from-white from-blue-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
+                      <u className="transition-all  bg-gradient-to-br dark:from-white from-blue-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
                         AI
                       </u>{" "}
                       and{" "}
-                      <u className="transition-all transition-all bg-gradient-to-br dark:from-white from-gray-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
+                      <u className="transition-all  bg-gradient-to-br dark:from-white from-gray-600 from-30% dark:to-white/40 to-black/40 bg-clip-text">
                         Github
                       </u>
                     </h1>
                   </div>
                 </div>
-                <div className="transition-all transition-all w-full  mt-2  flex flex-col space-y-2 items-center justify-center p-6">
+                <div className="transition-all  w-full  mt-2  flex flex-col space-y-2 items-center justify-center p-6">
                   <Form {...form}>
                     <form
                       onSubmit={form.handleSubmit(handler)}
-                      className="transition-all transition-all space-y-4 w-auto  "
+                      className="transition-all  space-y-4 w-auto  "
                     >
                       <FormField
                         control={form.control}
@@ -187,13 +188,13 @@ export const LandingContainer = () => {
                                 <SmoothSkeletonLoader />
                               ) : (
                                 <FormItem>
-                                  <div className="transition-all transition-all flex items-center space-x-2 bg-gray-100 rounded-full p-2 transition-all duration-300 hover:bg-gray-200 focus-within:ring-2 focus-within:ring-purple-400">
+                                  <div className="transition-all  flex items-center space-x-2 bg-gray-100 rounded-full p-2 transition-all duration-300 hover:bg-gray-200 focus-within:ring-2 focus-within:ring-purple-400">
                                     <FormControl>
                                       <input
                                         {...field}
                                         type="text"
                                         placeholder="Drop your github username ..."
-                                        className="transition-all transition-all hover:shadow-xl flex-grow bg-transparent outline-none text-primary placeholder-gray-500 px-4 py-2 rounded-full"
+                                        className="transition-all  hover:shadow-xl flex-grow bg-transparent outline-none text-primary placeholder-gray-500 px-4 py-2 rounded-full"
                                         disabled={isPending}
                                       />
                                     </FormControl>
@@ -203,10 +204,10 @@ export const LandingContainer = () => {
                                       className="transition-all   text-white rounded-full px-6 py-2 bg-primary hover:bg-secondary duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400"
                                     >
                                       Send
-                                      <ArrowRightIcon className="transition-all transition-all ml-2 h-4 w-4" />
+                                      <ArrowRightIcon className="transition-all  ml-2 h-4 w-4" />
                                     </ShimmerButton>
                                     <DropdownMenu>
-                                      <div className="transition-all transition-all  text-white rounded-full px-6 py-2 hover:bg-primary/20 duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400/20">
+                                      <div className="transition-all   text-white rounded-full px-6 py-2 hover:bg-primary/20 duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400/20">
                                         <DropdownMenuTrigger asChild>
                                           <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -225,13 +226,13 @@ export const LandingContainer = () => {
                                                   ? "#f60002"
                                                   : "#295dff"
                                               }
-                                              className="transition-all transition-all"
+                                              className="transition-all "
                                               d="M17 21.025q-.2 0-.4-.05t-.375-.175l-3-1.75q-.35-.2-.537-.537t-.188-.738V14.25q0-.4.188-.737t.537-.538l3-1.75q.175-.125.375-.175T17 11t.388.063t.362.162l3 1.75q.35.2.55.538t.2.737v3.525q0 .4-.2.738t-.55.537l-3 1.75q-.175.1-.363.163t-.387.062M10 12q-1.65 0-2.825-1.175T6 8t1.175-2.825T10 4t2.825 1.175T14 8t-1.175 2.825T10 12m-8 8v-2.8q0-.825.425-1.55t1.175-1.1q1.275-.65 2.875-1.1T10 13h.35q.15 0 .3.05q-.2.45-.337.938T10.1 15H10q-1.775 0-3.187.45t-2.313.9q-.225.125-.363.35T4 17.2v.8h6.3q.15.525.4 1.038t.55.962zm8-10q.825 0 1.413-.587T12 8t-.587-1.412T10 6t-1.412.588T8 8t.588 1.413T10 10m4.65 3.85L17 15.225l2.35-1.375L17 12.5zm3.1 5.2l2.25-1.3V15l-2.25 1.325zM14 17.75l2.25 1.325V16.35L14 15.025z"
                                             />
                                           </svg>
                                         </DropdownMenuTrigger>
 
-                                        <DropdownMenuContent className="transition-all transition-all w-full  p-2 rounded-xl h-[250px]">
+                                        <DropdownMenuContent className="transition-all  w-full  p-2 rounded-xl h-[250px]">
                                           <FormField
                                             control={form.control}
                                             name="developer"
@@ -275,22 +276,23 @@ export const LandingContainer = () => {
                           );
                         }}
                       />
-
-                      {form.formState.errors.username && (
-                        <>
-                          <div className="transition-all w-full flex items-center justify-center ">
-                            <p className="transition-all  py-2 transition-all text-sm font-bold drop-shadow-md text-red-800 text-center">
-                              Your username requires be valid ...
-                            </p>
-                          </div>
-                        </>
-                      )}
+                      <div className="h-6 min-h-sm ">
+                        {form.formState.errors.username && (
+                          <>
+                            <div className="relative top-1 transition-all w-full flex items-center justify-center ">
+                              <p className="">
+                                <WordUp data="Your username requires be valid ..." />
+                              </p>
+                            </div>
+                          </>
+                        )}
+                      </div>{" "}
                     </form>
                   </Form>
                 </div>
 
-                <div className="transition-all transition-all  w-full max-w-3xl p-4 ">
-                  <h2 className="transition-all transition-all text-lg font-semibold mb-4">
+                <div className="transition-all   w-full max-w-3xl p-4 ">
+                  <h2 className="transition-all  text-lg font-semibold mb-4">
                     Popular Developers
                   </h2>
                   <ScrollArea className="transition-all h-[500px] w-full px-auto flex items-center justify-center ">
@@ -484,7 +486,7 @@ export const Element = ({
       <div className="transition-all w-full flex items-center justify-center relative bottom-4">
         <ShimmerButton
           type="submit"
-          className="transition-all transition-all  text-white rounded-full px-6 py-2 hover:bg-primary duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400"
+          className="transition-all   text-white rounded-full px-6 py-2 hover:bg-primary duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400"
           // onClick={() => setView(!view)}
         >
           Generate Another

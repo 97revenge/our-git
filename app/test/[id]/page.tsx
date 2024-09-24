@@ -1,23 +1,24 @@
-import { FillingComponent } from "@/components/filling-Component";
+import { Suspense } from "react";
+// import { FillingComponent } from "@/components/filling-Component";
 import type { GenerateMetadataProps } from "@/lib";
 import type { Metadata, ResolvingMetadata } from "next";
+import { FillingComponent } from "@/components/filling-Component";
+import { GlassLoadingScreen } from "@/components/glass-loading-screen";
+
+// Dynamic import of the FillingComponent with a loading fallback
 
 export async function generateMetadata(
   { params, searchParams }: GenerateMetadataProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  // read route params
+  // Read route params
   const id = params.id;
 
-  // fetch data
+  // Fetch data
   const user = await fetch(`https://api.github.com/users/${id}`);
+  const data: { name: string; id: number } = await user.json();
 
-  const data: {
-    name: string;
-    id: number;
-  } = await user.json();
-
-  // optionally access and extend (rather than replace) parent metadata
+  // Optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
@@ -37,11 +38,9 @@ export default function Page({
     id: string;
   };
 }) {
-  // agente passa um loader aqui tambem !
-  // aquele baseado na tela ou fazer isso na "/" rota.
   return (
-    <>
+    <Suspense fallback={<GlassLoadingScreen />}>
       <FillingComponent params={params.id} />
-    </>
+    </Suspense>
   );
 }
