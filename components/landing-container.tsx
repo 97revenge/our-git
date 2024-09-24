@@ -295,7 +295,7 @@ export const LandingContainer = () => {
                   <h2 className="transition-all  text-lg font-semibold mb-4">
                     Popular Developers
                   </h2>
-                  <ScrollArea className="transition-all h-[500px] w-full px-auto flex items-center justify-center ">
+                  <ScrollArea className="transition-all h-[500px] w-full px-auto flex items-center justify-center">
                     <div className="transition-all  transition-all grid grid-cols-1 grid-flow-row sm:grid-cols-2    md:grid-cols-2 w-full  gap-4   ">
                       {isPending ? (
                         <>
