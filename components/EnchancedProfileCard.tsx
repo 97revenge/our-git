@@ -30,7 +30,7 @@ export const ThemeToggle = ({ darkMode, setDarkMode }: any) => {
   return (
     <button
       onClick={() => setDarkMode(!darkMode)}
-      className="mb-4 p-2 rounded-full bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-md transition-colors duration-300"
+      className="mb-4  p-2 rounded-full bg-white dark:bg-secondary text-gray-800 dark:text-gray-200 shadow-md transition-colors duration-300"
       aria-label="Toggle dark mode"
     >
       {darkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -41,7 +41,7 @@ export const ThemeToggle = ({ darkMode, setDarkMode }: any) => {
 export const ProfileCard = ({ ...props }) => {
   return (
     <>
-      <div className="w-full max-w-sm" {...props}></div>
+      <div className="w-full max-w-sm " {...props}></div>
     </>
   );
 };

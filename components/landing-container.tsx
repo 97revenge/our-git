@@ -69,8 +69,9 @@ import DeveloperInsightsSkeleton from "@/components/developer-insights-skeleton"
 import { useRouter } from "next/navigation";
 import { githubUser } from "@/lib/zod/githubUser";
 import { WordUp } from "./variant-vault/WordUp";
+import { DockElement } from "./dock-element";
 
-const OPTIONS: Option[] = [
+export const OPTIONS: Option[] = [
   { label: "Front-End Developer", value: "front" },
   { label: "Back-End Developer", value: "back" },
   { label: "Full Stack Developer", value: "fullstack" },
@@ -143,13 +144,15 @@ export const LandingContainer = () => {
 
   return (
     <>
-      <AnimatedBeam className="transition-all  h-full flex items-center justify-center w-full ">
+      <AnimatedBeam className="transition-all  h-full flex items-center justify-center Fw-full ">
         <FadeUp stagger={0.15}>
-          <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+          <div className="bg-blue-200 flex items-center justify-center h-11 w-full pt-4">
+            <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+          </div>
           {view === false ? (
             <>
-              <main className="transition-all  flex-grow flex flex-col items-center justify-start w-full h-full   ">
-                <div className="transition-all  w-full  ">
+              <main className="transition-all  flex-grow flex flex-col items-center justify-start w-full h-screen  bg-yellow-200 ">
+                <div className="transition-all  w-full bg-green-200  ">
                   <div
                     className="transition-all   flex flex-col
                   items-center justify-center w-full "
@@ -171,7 +174,7 @@ export const LandingContainer = () => {
                     </h1>
                   </div>
                 </div>
-                <div className="transition-all  w-full  mt-2  flex flex-col space-y-2 items-center justify-center p-6">
+                <div className="transition-all bg-red-200  w-full    flex flex-col space-y-2 items-center justify-center  ">
                   <Form {...form}>
                     <form
                       onSubmit={form.handleSubmit(handler)}
@@ -188,13 +191,13 @@ export const LandingContainer = () => {
                                 <SmoothSkeletonLoader />
                               ) : (
                                 <FormItem>
-                                  <div className="transition-all  flex items-center space-x-2 bg-gray-100 rounded-full p-2 transition-all duration-300 hover:bg-gray-200 focus-within:ring-2 focus-within:ring-purple-400">
+                                  <div className="transition-all  flex items-center space-x-2 bg-gray-100 rounded-full p-2 transition-all duration-300 hover:bg-gray-200  dark:bg-secondary focus-within:ring-2 focus-within:ring-purple-400">
                                     <FormControl>
                                       <input
                                         {...field}
                                         type="text"
                                         placeholder="Drop your github username ..."
-                                        className="transition-all  hover:shadow-xl flex-grow bg-transparent outline-none text-primary placeholder-gray-500 px-4 py-2 rounded-full"
+                                        className="transition-all text-black dark:text-white hover:shadow-xl flex-grow bg-transparent outline-none text-primary placeholder-gray-500 px-4 py-2 rounded-full"
                                         disabled={isPending}
                                       />
                                     </FormControl>
@@ -253,6 +256,7 @@ export const LandingContainer = () => {
                                                           "Voçe só pode adicionar um."
                                                         )
                                                       }
+                                                      className="bg-white dark:bg-secondary"
                                                       placeholder="Select your role..."
                                                       emptyIndicator={
                                                         <p className="transition-all text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
@@ -280,7 +284,7 @@ export const LandingContainer = () => {
                         {form.formState.errors.username && (
                           <>
                             <div className="relative top-1 transition-all w-full flex items-center justify-center ">
-                              <p className="">
+                              <p className="text-lg">
                                 <WordUp data="Your username requires be valid ..." />
                               </p>
                             </div>
@@ -291,8 +295,8 @@ export const LandingContainer = () => {
                   </Form>
                 </div>
 
-                <div className="transition-all   w-full max-w-3xl p-4 ">
-                  <h2 className="transition-all  text-lg font-semibold mb-4">
+                <div className="transition-all bg-blue-200  w-full max-w-3xl  ">
+                  <h2 className="transition-all transition-all  text-lg font-semibold mb-4 ">
                     Popular Developers
                   </h2>
                   <ScrollArea className="transition-all h-[500px] w-full px-auto flex items-center justify-center">
@@ -317,8 +321,10 @@ export const LandingContainer = () => {
                               ) : (
                                 <>
                                   <EnchancedProfileCard>
-                                    <Link href={`/test?user=${item?.login}`}>
-                                      <article className="transition-all bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-colors duration-300 max-h-full ">
+                                    <Link
+                                      href={`/test/${item?.login}incharge="front"`} // por enquanto...
+                                    >
+                                      <article className="transition-all bg-white dark:bg-secondary rounded-lg shadow-md overflow-hidden transition-colors duration-300 max-h-full ">
                                         <div className="transition-all p-4">
                                           <div className="transition-all flex items-center space-x-2 mb-2">
                                             <Image

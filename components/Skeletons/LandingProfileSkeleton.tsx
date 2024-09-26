@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const LandingProfileSkeleton = () => {
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-sm bg-white dark:bg-secondary">
       <CardContent className="p-4">
         <div className="flex items-center space-x-4">
           <Skeleton className="h-12 w-12 rounded-full" />
