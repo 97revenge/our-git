@@ -44,13 +44,6 @@ export type StandartIncharges<T> = {
 export declare interface RebootIncharges
   extends StandartIncharges<ScaffoldType<{ prompt: string; system: string }>> {}
 
-// Generics mantem o tipo reútilizavel
-// quer mais chaves ? sem problemas !!! :
-// export interface CommunityIncharges
-//   extends StandartIncharges<ScaffoldType<string>> {}
-// CommunityIncharges se referencia de StandartIncharges porem
-// permite receber qualquer chave mesmo que nao seja declarada.
-
 export declare type GenerateMetadataProps = {
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
