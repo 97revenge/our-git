@@ -9,14 +9,10 @@ import type { userSchema } from "@/lib/zod/user";
 import { generateObject, generateText, tool } from "ai";
 import { model } from "@/actions/user";
 
-import { chromeai } from "chrome-ai";
-
 export async function generateMetadata(
   { params, searchParams }: GenerateMetadataProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  // Read route params
-
   const id = params.id;
 
   const user = await fetch(`https://api.github.com/users/${id}`);
@@ -28,12 +24,12 @@ export async function generateMetadata(
     prompt:
       "create an inspiring and very interesting sentence of 3 to 7 words about the content of this github user:" +
       Array.from([data]).map((item) => {
-        console.log(item);
         return JSON.stringify(item);
       }),
+    maxTokens: 8,
   });
 
-  const result = text as string;
+  const result = (text as string) + " ...";
 
   const ogImage = `/api/id?username=${JSON.stringify(
     data?.login
@@ -50,7 +46,7 @@ export async function generateMetadata(
       "our-git",
       "GitHub Username",
     ],
-    authors: [{ name: "our-git", url: "https://our" }], // Replace with actual URL
+    authors: [{ name: "our-git", url: "https://our-git.vercel.app" }], // Replace with actual URL
     icons: {
       icon: "https://api.iconify.design/ph:github-logo-duotone.svg?color=%23770954",
       apple:
@@ -64,8 +60,20 @@ export async function generateMetadata(
       images: [
         {
           url: ogImage,
-          width: 1200 | 800 | 650,
-          height: 630 | 450 | 300,
+          width: 1200,
+          height: 630,
+          alt: "Dynamic image about the user and the message this user represents evaluated by AI gemini 1.5 Pro",
+        },
+        {
+          url: ogImage,
+          width: 800,
+          height: 450,
+          alt: "Dynamic image about the user and the message this user represents evaluated by AI gemini 1.5 Pro",
+        },
+        {
+          url: ogImage,
+          width: 650,
+          height: 300,
           alt: "Dynamic image about the user and the message this user represents evaluated by AI gemini 1.5 Pro",
         },
         `https://avatars.githubusercontent.com/u/${data?.id}?v=4`,
