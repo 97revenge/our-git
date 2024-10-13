@@ -84,7 +84,7 @@ export const content = async (
   }));
 
   const result = await getNoteStream(treatmentData.code, username);
-  const resume = await getResumeByAi(treatmentData.code, username);
+  const resume = await getResumeByAi(treatmentData.code, username, role as any);
   const insights = await getInsightsByAi(treatmentData.code, username);
 
   return {

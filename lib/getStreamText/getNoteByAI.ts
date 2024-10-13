@@ -1,6 +1,6 @@
 import { model } from "@/actions/user";
 import { getPromptAndSystemByIncharge as getPromptAndSystem } from "@/lib/getStreamText/getPromptAndSystemByIncharge";
-import { streamText } from "ai";
+import { generateObject, streamText } from "ai";
 import { createStreamableValue } from "ai/rsc";
 
 export const getNoteStream = async (data: any[], login?: string) => {

@@ -87,16 +87,6 @@ export const LandingContainer = () => {
 
   const [dev, setDev] = useState<z.infer<typeof userSchema>[]>([]);
 
-  const [note, setNote] = useState<any>("");
-
-  const [resume, setResume] = useState<any>("");
-
-  const [insights, setInsights] = useState<any[]>([]);
-
-  const [graphChart, setGraphChart] = useState<GraphChart<string | number>[]>(
-    []
-  );
-
   const handler = async (e: z.infer<typeof githubUser>) => {
     try {
       startTransition(async () => {
@@ -191,7 +181,7 @@ export const LandingContainer = () => {
                                 <SmoothSkeletonLoader />
                               ) : (
                                 <FormItem>
-                                  <div className="transition-all  flex items-center space-x-2 bg-gray-100 rounded-full p-2 transition-all duration-300 hover:bg-gray-200  dark:bg-secondary focus-within:ring-2 focus-within:ring-purple-400">
+                                  <div className="transition-all  flex items-center space-x-2 bg-gray-100 rounded-full p-2  duration-300 hover:bg-gray-200  dark:bg-secondary focus-within:ring-2 focus-within:ring-purple-400">
                                     <FormControl>
                                       <input
                                         {...field}
@@ -296,11 +286,11 @@ export const LandingContainer = () => {
                 </div>
 
                 <div className="transition-all bg-blue-200  w-full max-w-3xl  ">
-                  <h2 className="transition-all transition-all  text-lg font-semibold mb-4 ">
+                  <h2 className="transition-all   text-lg font-semibold mb-4 ">
                     Popular Developers
                   </h2>
                   <ScrollArea className="transition-all h-[500px] w-full px-auto flex items-center justify-center">
-                    <div className="transition-all  transition-all grid grid-cols-1 grid-flow-row sm:grid-cols-2    md:grid-cols-2 w-full  gap-4   ">
+                    <div className="transition-all  grid grid-cols-1 grid-flow-row sm:grid-cols-2    md:grid-cols-2 w-full  gap-4   ">
                       {isPending ? (
                         <>
                           <LandingProfileSkeleton />
@@ -324,7 +314,7 @@ export const LandingContainer = () => {
                                     <Link
                                       href={`/test/${item?.login}incharge="front"`} // por enquanto...
                                     >
-                                      <article className="transition-all bg-white dark:bg-secondary rounded-lg shadow-md overflow-hidden transition-colors duration-300 max-h-full ">
+                                      <article className="transition-all bg-white dark:bg-secondary rounded-lg shadow-md overflow-hidden  duration-300 max-h-full ">
                                         <div className="transition-all p-4">
                                           <div className="transition-all flex items-center space-x-2 mb-2">
                                             <Image

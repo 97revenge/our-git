@@ -3,8 +3,10 @@ import { recourse } from "../recourse/resource";
 
 const { front } = recourse;
 
+type InchargeProps = "front" | "back" | "fullstack" | "design";
+
 export const getPromptAndSystemByIncharge = (
-  incharge: "front",
+  incharge: InchargeProps,
   data?: {
     systemResource: any[];
     login?: string;

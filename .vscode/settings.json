@@ -86,7 +86,7 @@
   "editor.accessibilitySupport": "off",
   "explorer.confirmDragAndDrop": false,
   "terminal.integrated.fontSize": 14,
-  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+  "terminal.integrated.fontFamily": "monospace",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
@@ -183,5 +183,5 @@
     "textMateRules": []
   },
   "workbench.layoutControl.enabled": true,
-  "workbench.colorTheme": "Monokai Classic"
+  "workbench.colorTheme": "Monokai GRS"
 }

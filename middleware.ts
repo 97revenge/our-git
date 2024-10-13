@@ -8,24 +8,18 @@ export default async function middleware(request: NextRequest) {
   const next = NextResponse.next();
 
   const incharge = request.nextUrl.searchParams.get("incharge");
-  request;
 
   const login = pathname.split("/")[2];
 
   const validInchargeValues = ["front", "back", "fullstack", "data", "design"];
 
-  console.log(login);
-
   try {
-    const response = await fetch(
-      `https://api.github.com/users/${login}/repos`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${process.env.GITHUB_API_KEY!}`,
-        },
-      }
-    );
+    const response = await fetch(`https://api.github.com/users/${login}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${process.env.GITHUB_API_KEY!}`,
+      },
+    });
     if (!response.ok) {
       return redirect;
     }
